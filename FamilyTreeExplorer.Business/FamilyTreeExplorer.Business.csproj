@@ -8,4 +8,8 @@
     <ProjectReference Include="..\FamilyTreeExplorer.Crosscutting\FamilyTreeExplorer.Crosscutting.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FactAlgorithms\" />
+  </ItemGroup>
+
 </Project>
