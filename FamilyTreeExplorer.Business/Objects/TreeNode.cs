@@ -6,7 +6,7 @@ namespace FamilyTreeExplorer.Business.Objects
 {
     public abstract class TreeNode : IEquatable<TreeNode>
     {
-        public int? Id { get; set; }
+        public Guid Id { get; set; }
 
         public bool Equals(TreeNode other)
         {

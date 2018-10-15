@@ -12,21 +12,23 @@ namespace FamilyTreeExplorer.Business.Objects
         }
         public FamilyMember(string name)
         {
+            this.Id = Guid.NewGuid();
             this.Name = name;
-        }
-        public FamilyMember(int id, string name) : this(name)
-        {
-            this.Id = id;
         }
 
         public string Name { get; set; }
         public FamilyMember Parent1 { get; set; }
         public FamilyMember Parent2 { get; set; }
         public List<Partnership> Partnerships { get; set; } = new List<Partnership>();
+        public List<FamilyMember> NonPartnershipChildren { get; set; } = new List<FamilyMember>();
 
         public bool HasPartnerships()
         {
             return Partnerships.Count > 0;
+        }
+        public bool HasChildren()
+        {
+            return Partnerships.Exists(x => x.HasChildren()) || NonPartnershipChildren.Count > 0;
         }
     }
 }

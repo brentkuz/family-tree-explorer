@@ -14,18 +14,24 @@ namespace FamilyTreeExplorer.ConsoleApp
                 kyle = new FamilyMember("Kyle"),
                 jaclyn = new FamilyMember("Jaclyn"),
                 roxi = new FamilyMember("Roxi"),
-                della = new FamilyMember("Della");
+                della = new FamilyMember("Della"),
+                aura = new FamilyMember("Aura");
 
             var tree = new FamilyTree(new Partnership(greg, pam));
             var root = tree.Root;
-            tree.AddChild(jeff, root);
-            tree.AddChild(brent, root);
-            tree.AddChild(kyle, root);
-            tree.AddChild(jaclyn);
+            tree.AddChild(root, jeff);
+            tree.AddChild(root, brent);
+            tree.AddChild(root, kyle);
+            tree.AddInLaw(jaclyn);
+            tree.AddInLaw(aura);
             
             var brentJaclyn = tree.AddPartnership(brent, jaclyn);
-            tree.AddChild(roxi, brentJaclyn);
-            tree.AddChild(della, brentJaclyn);
+            tree.AddChild(brentJaclyn, roxi);
+            tree.AddChild(brentJaclyn, della);
+
+            var jeffAura = tree.AddPartnership(jeff, aura);
+
+            
 
             Console.ReadKey();
         }

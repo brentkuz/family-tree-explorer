@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTreeExplorer.ConsoleApp", "FamilyTreeExplorer\FamilyTreeExplorer.ConsoleApp.csproj", "{CB65BFA4-BA7A-425F-8050-C4C1D0041EDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTreeExplorer.ConsoleApp", "FamilyTreeExplorer\FamilyTreeExplorer.ConsoleApp.csproj", "{CB65BFA4-BA7A-425F-8050-C4C1D0041EDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTreeExplorer.Business", "FamilyTreeExplorer.Business\FamilyTreeExplorer.Business.csproj", "{7F5C3E49-6186-459F-94C9-90F5F0974C1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTreeExplorer.Business", "FamilyTreeExplorer.Business\FamilyTreeExplorer.Business.csproj", "{7F5C3E49-6186-459F-94C9-90F5F0974C1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTreeExplorer.Test", "FamilyTreeExplorer.Test\FamilyTreeExplorer.Test.csproj", "{054F6C97-C036-4590-B63D-17790D6986B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7F5C3E49-6186-459F-94C9-90F5F0974C1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F5C3E49-6186-459F-94C9-90F5F0974C1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F5C3E49-6186-459F-94C9-90F5F0974C1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{054F6C97-C036-4590-B63D-17790D6986B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{054F6C97-C036-4590-B63D-17790D6986B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{054F6C97-C036-4590-B63D-17790D6986B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{054F6C97-C036-4590-B63D-17790D6986B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

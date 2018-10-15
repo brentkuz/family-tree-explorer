@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FamilyTreeExplorer.Business.Objects
 {
     public class FamilyTree
     {
-        private Dictionary<int, FamilyMember> members = new Dictionary<int, FamilyMember>();
-        private Dictionary<int, Partnership> partnerships = new Dictionary<int, Partnership>();
+        private Dictionary<Guid, FamilyMember> members = new Dictionary<Guid, FamilyMember>();
+        private Dictionary<Guid, Partnership> partnerships = new Dictionary<Guid, Partnership>();
 
         public FamilyTree(Partnership root)
         {
@@ -27,14 +28,29 @@ namespace FamilyTreeExplorer.Business.Objects
         public Partnership Root { get; set; }
         public int Count { get { return members.Count; } }
 
-        public void AddChild(FamilyMember child, Partnership partnership = null)
+        public void AddInLaw(FamilyMember inlaw)
+        {
+            AddMember(inlaw);
+        }
+        public void AddChild(Partnership partnership, FamilyMember child)
         {
             if (partnership != null && !PartnershipExists(partnership))
                 throw new InvalidPartnershipException("Cannot add children to a partnership that does not exist.");
 
-            if(partnership != null)
-                partnership.Children.Add(child);
             AddMember(child);
+
+            child.Parent1 = partnership.Partner1 ?? null;
+            child.Parent2 = partnership.Partner2 ?? null;
+            partnership.Children.Add(child);
+        }
+        public void AddNonPartnershipChild(FamilyMember parent, FamilyMember child)
+        {
+            if (!MemberExists(parent))
+                throw new NotInFamilyTreeException(parent);
+
+            AddMember(child);
+            child.Parent1 = parent;
+            parent.NonPartnershipChildren.Add(child);
         }
         public Partnership AddPartnership(FamilyMember partner1, FamilyMember partner2)
         {
@@ -54,7 +70,7 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             return members.ContainsValue(member);
         }
-        public bool MemberExists(int id)
+        public bool MemberExists(Guid id)
         {
             return members.ContainsKey(id);
         }
@@ -62,15 +78,20 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             return partnerships.ContainsValue(partnership);
         }
-        public bool PartnershipExists(int id)
+        public bool SimilarPartnershipExists(Partnership partnership)
+        {
+            return partnerships.Values.Where(x => x.Partner1 == partnership.Partner1 && x.Partner2 == partnership.Partner2).SingleOrDefault() != null
+                || partnerships.Values.Where(x => x.Partner1 == partnership.Partner2 && x.Partner2 == partnership.Partner1).SingleOrDefault() != null;
+        }
+        public bool PartnershipExists(Guid id)
         {
             return partnerships.ContainsKey(id);
         }
-        public FamilyMember GetMemberById(int id)
+        public FamilyMember GetMemberById(Guid id)
         {
             return members[id];
         }
-        public Partnership GetPartnershipById(int id)
+        public Partnership GetPartnershipById(Guid id)
         {
             return partnerships[id];
         }
@@ -79,26 +100,22 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             if (MemberExists(member))
                 throw new DuplicateMemberException(member);
-            if (!member.Id.HasValue)
-                member.Id = members.Count;
-            members.Add((int)member.Id, member);
+            members.Add(member.Id, member);
         }
         private void AddPartnership(Partnership partnership)
         {
-            if (PartnershipExists(partnership))
+            if (PartnershipExists(partnership) || SimilarPartnershipExists(partnership))
                 throw new DuplicateParntershipException(partnership);
-            if (!partnership.Id.HasValue)
-                partnership.Id = partnerships.Count;
 
-            partnerships.Add((int)partnership.Id, partnership);
+            partnerships.Add(partnership.Id, partnership);
         }
     }
 
     public class NotInFamilyTreeException : Exception
     {
         public NotInFamilyTreeException() { }
-        public NotInFamilyTreeException(FamilyMember partner) 
-            : base(string.Format("Partner is not a member of the tree", partner.Id)) { }
+        public NotInFamilyTreeException(FamilyMember member) 
+            : base(string.Format("Partner is not a member of the tree", member.Id)) { }
         public NotInFamilyTreeException(string message) : base(message) { }
     }
     public class DuplicateMemberException : Exception
