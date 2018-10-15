@@ -1,4 +1,5 @@
 ﻿using FamilyTreeExplorer.Business.Objects;
+using FamilyTreeExplorer.Crosscutting.Enums;
 using System;
 
 namespace FamilyTreeExplorer.ConsoleApp
@@ -7,15 +8,16 @@ namespace FamilyTreeExplorer.ConsoleApp
     {
         static void Main(string[] args)
         {
-            FamilyMember greg = new FamilyMember("Greg"),
-                pam = new FamilyMember("Pam"),
-                jeff = new FamilyMember("Jeff"),
-                brent = new FamilyMember("Brent"),
-                kyle = new FamilyMember("Kyle"),
-                jaclyn = new FamilyMember("Jaclyn"),
-                roxi = new FamilyMember("Roxi"),
-                della = new FamilyMember("Della"),
-                aura = new FamilyMember("Aura");
+            FamilyMember greg = new FamilyMember("Greg", Gender.Male),
+                pam = new FamilyMember("Pam", Gender.Female),
+                jeff = new FamilyMember("Jeff", Gender.Male),
+                brent = new FamilyMember("Brent", Gender.Male),
+                kyle = new FamilyMember("Kyle", Gender.Male),
+                jaclyn = new FamilyMember("Jaclyn", Gender.Female),
+                roxi = new FamilyMember("Roxi", Gender.Female),
+                della = new FamilyMember("Della", Gender.Female),
+                aura = new FamilyMember("Aura", Gender.Female),
+                ping = new FamilyMember("Ping", Gender.Male);
 
             var tree = new FamilyTree(new Partnership(greg, pam));
             var root = tree.Root;
@@ -31,9 +33,22 @@ namespace FamilyTreeExplorer.ConsoleApp
 
             var jeffAura = tree.AddPartnership(jeff, aura);
 
-            
+            tree.AddNonPartnershipChild(kyle, ping);
+
+            foreach (FamilyMember fm in tree)
+                DisplayMemberWithFacts(fm);
 
             Console.ReadKey();
+        }
+
+        private static void DisplayMemberWithFacts(FamilyMember fm)
+        {
+            string facts = "";
+            foreach(var f in fm.GetFacts())
+            {
+                facts += string.Format("{0}: {1}; ", f.Type, f.Value);
+            }
+            Console.WriteLine(fm.Name + " - " + facts);
         }
     }
 }

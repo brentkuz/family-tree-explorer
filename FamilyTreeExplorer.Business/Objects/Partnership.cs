@@ -35,5 +35,12 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             return this.Id == other.Id;
         }
+        public FamilyMember OtherPartner(FamilyMember member)
+        {
+            if (member == Partner1)
+                return Partner2;
+            else
+                return Partner1;
+        }
     }
 }

@@ -1,11 +1,13 @@
-﻿using System;
+﻿using FamilyTreeExplorer.Crosscutting.Enums;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace FamilyTreeExplorer.Business.Objects
 {
-    public class FamilyTree
+    public class FamilyTree : IEnumerable
     {
         private Dictionary<Guid, FamilyMember> members = new Dictionary<Guid, FamilyMember>();
         private Dictionary<Guid, Partnership> partnerships = new Dictionary<Guid, Partnership>();
@@ -15,10 +17,12 @@ namespace FamilyTreeExplorer.Business.Objects
             this.Root = root;
             if (root.Partner1 != null)
             {
-                AddMember(root.Partner1);                
+                root.Partner1.AddFact(FactType.Depth, 0);
+                AddMember(root.Partner1);                 
             }
             if (root.Partner2 != null)
             {
+                root.Partner2.AddFact(FactType.Depth, 0);
                 AddMember(root.Partner2);
             }
 
@@ -30,6 +34,7 @@ namespace FamilyTreeExplorer.Business.Objects
 
         public void AddInLaw(FamilyMember inlaw)
         {
+            inlaw.AddFact(FactType.InLaw, true);
             AddMember(inlaw);
         }
         public void AddChild(Partnership partnership, FamilyMember child)
@@ -42,12 +47,18 @@ namespace FamilyTreeExplorer.Business.Objects
             child.Parent1 = partnership.Partner1 ?? null;
             child.Parent2 = partnership.Partner2 ?? null;
             partnership.Children.Add(child);
+
+            //Determine depth based on parents
+            int depth = (int)(child.Parent1.Facts[FactType.Depth]?.Value ?? child.Parent2.Facts[FactType.Depth]?.Value) + 1;
+            child.AddFact(FactType.Depth, depth);
         }
         public void AddNonPartnershipChild(FamilyMember parent, FamilyMember child)
         {
             if (!MemberExists(parent))
                 throw new NotInFamilyTreeException(parent);
 
+            child.AddFact(FactType.SingleParent, true);
+            child.AddFact(FactType.Depth, (int)parent.Facts[FactType.Depth].Value + 1);
             AddMember(child);
             child.Parent1 = parent;
             parent.NonPartnershipChildren.Add(child);
@@ -62,10 +73,18 @@ namespace FamilyTreeExplorer.Business.Objects
 
             var partnership = new Partnership(partner1, partner2);
 
+            FamilyMember blood = null,
+                inlaw = null;
+
+            inlaw = partner1.HasFact(FactType.InLaw) ? partner1 : partner2;
+            blood = partnership.OtherPartner(inlaw);
+            inlaw.AddFact(FactType.Depth, blood.Facts[FactType.Depth].Value);
+
             AddPartnership(partnership);
 
             return partnership;
         }
+
         public bool MemberExists(FamilyMember member)
         {
             return members.ContainsValue(member);
@@ -95,7 +114,13 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             return partnerships[id];
         }
-   
+
+        public IEnumerator GetEnumerator()
+        {
+            foreach (var x in members.Values)
+                yield return x;
+        }
+
         private void AddMember(FamilyMember member)
         {
             if (MemberExists(member))
