@@ -11,21 +11,19 @@ namespace FamilyTreeExplorer.Business.Objects
     {
         public FamilyMember()
         {
-
+            NonPartnership.Partner1 = this;
         }
-        public FamilyMember(string name, Gender gender)
-        {
-            this.Id = Guid.NewGuid();
+        public FamilyMember(string name, Gender gender) : this()
+        {                    
             this.Name = name;
             this.Gender = gender;
         }
 
         public string Name { get; set; }
         public Gender Gender { get; set; }
-        public FamilyMember Parent1 { get; set; }
-        public FamilyMember Parent2 { get; set; }
+        public Parentship Parents { get; set; }
         public List<Partnership> Partnerships { get; set; } = new List<Partnership>();
-        public List<FamilyMember> NonPartnershipChildren { get; set; } = new List<FamilyMember>();
+        public Parentship NonPartnership { get; set; } = new Parentship();
 
         public Dictionary<FactType, Fact> Facts { get; set; } = new Dictionary<FactType, Fact>();
 
@@ -35,7 +33,7 @@ namespace FamilyTreeExplorer.Business.Objects
         }
         public bool HasChildren()
         {
-            return Partnerships.Exists(x => x.HasChildren()) || NonPartnershipChildren.Count > 0;
+            return Partnerships.Exists(x => x.HasChildren()) || NonPartnership.Children.Count > 0;
         }
         
         public IEnumerable<Fact> GetFacts()

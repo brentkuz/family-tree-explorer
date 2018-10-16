@@ -41,10 +41,7 @@ namespace FamilyTreeExplorer.Test.Business.Objects
 
             Assert.IsNotNull(tree.GetMemberById(child.Id));
             Assert.IsTrue(tree.Root.ChildExists(child));
-            var par1 = child.Parent1;
-            var par2 = child.Parent2;
-            Assert.AreEqual(tree.Root.Partner1, par1);
-            Assert.AreEqual(tree.Root.Partner2, par2);
+            Assert.AreEqual(tree.Root, child.Parents);
         }
 
         [TestMethod]
@@ -66,8 +63,8 @@ namespace FamilyTreeExplorer.Test.Business.Objects
 
             tree.AddNonPartnershipChild(parent, child);
 
-            Assert.IsTrue(parent.NonPartnershipChildren.Contains(child));
-            Assert.AreEqual(parent, child.Parent1);
+            Assert.IsTrue(parent.NonPartnership.Children.Contains(child));
+            Assert.AreEqual(parent.NonPartnership, child.Parents);
         }
 
         [TestMethod]

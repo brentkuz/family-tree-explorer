@@ -10,6 +10,6 @@ namespace FamilyTreeExplorer.Crosscutting.Enums
         Relationship,
         InLaw,
         Target,
-        SingleParent
+        HasSingleParent
     }
 }

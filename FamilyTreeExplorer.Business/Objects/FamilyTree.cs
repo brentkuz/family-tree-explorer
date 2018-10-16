@@ -44,12 +44,11 @@ namespace FamilyTreeExplorer.Business.Objects
 
             AddMember(child);
 
-            child.Parent1 = partnership.Partner1 ?? null;
-            child.Parent2 = partnership.Partner2 ?? null;
+            child.Parents = partnership;
             partnership.Children.Add(child);
 
             //Determine depth based on parents
-            int depth = (int)(child.Parent1.Facts[FactType.Depth]?.Value ?? child.Parent2.Facts[FactType.Depth]?.Value) + 1;
+            int depth = (int)(partnership.Partner1.Facts[FactType.Depth]?.Value ?? partnership.Partner2.Facts[FactType.Depth]?.Value) + 1;
             child.AddFact(FactType.Depth, depth);
         }
         public void AddNonPartnershipChild(FamilyMember parent, FamilyMember child)
@@ -57,11 +56,11 @@ namespace FamilyTreeExplorer.Business.Objects
             if (!MemberExists(parent))
                 throw new NotInFamilyTreeException(parent);
 
-            child.AddFact(FactType.SingleParent, true);
+            child.AddFact(FactType.HasSingleParent, true);
             child.AddFact(FactType.Depth, (int)parent.Facts[FactType.Depth].Value + 1);
             AddMember(child);
-            child.Parent1 = parent;
-            parent.NonPartnershipChildren.Add(child);
+            parent.NonPartnership.Children.Add(child);
+            child.Parents = parent.NonPartnership;
         }
         public Partnership AddPartnership(FamilyMember partner1, FamilyMember partner2)
         {
