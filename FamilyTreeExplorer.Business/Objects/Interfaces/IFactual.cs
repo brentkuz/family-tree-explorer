@@ -8,6 +8,7 @@ namespace FamilyTreeExplorer.Business.Objects.Interfaces
     public interface IFactual
     {
         IEnumerable<Fact> GetFacts();
+        T GetFactValue<T>(FactType type);
         void AddFact(FactType type, object value);
         void ClearAllFacts();
         void RemoveFact(FactType type);

@@ -41,6 +41,13 @@ namespace FamilyTreeExplorer.Business.Objects
             return Facts.Values.OrderBy(x => x.Type);
         }
 
+        public T GetFactValue<T>(FactType type)
+        {
+            if (!HasFact(type))
+                throw new ArgumentException(string.Format("Fact {0} does not exist", type));
+            return (T)Facts[type].Value;
+        }
+
         public void AddFact(FactType type, object value)
         {
             var fact = new Fact()
@@ -69,5 +76,7 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             return Facts.ContainsKey(type);
         }
+
+   
     }
 }

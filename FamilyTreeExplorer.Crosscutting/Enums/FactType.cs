@@ -7,6 +7,8 @@ namespace FamilyTreeExplorer.Crosscutting.Enums
     public enum FactType
     {
         Depth,
+        XPosition,
+        YPosition,
         Relationship,
         InLaw,
         Target,
