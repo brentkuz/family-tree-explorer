@@ -1,13 +1,14 @@
 ﻿using FamilyTreeExplorer.Business.Objects.Interfaces;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace FamilyTreeExplorer.Business.Objects
 {
-    public class FamilyMember : TreeNode, IFactual
+    public class FamilyMember : TreeNode, IFactual, IEnumerable
     {
         public FamilyMember()
         {
@@ -77,6 +78,13 @@ namespace FamilyTreeExplorer.Business.Objects
             return Facts.ContainsKey(type);
         }
 
-   
+        public IEnumerator GetEnumerator()
+        {
+            foreach (var part in Partnerships)
+                 yield return part;
+            yield return NonPartnership;
+        }
+
+     
     }
 }

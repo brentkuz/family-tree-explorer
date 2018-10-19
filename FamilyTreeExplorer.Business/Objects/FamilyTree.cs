@@ -41,6 +41,8 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             if (partnership != null && !PartnershipExists(partnership))
                 throw new InvalidPartnershipException("Cannot add children to a partnership that does not exist.");
+            if (child.Parents != null)
+                throw new ExistingParentsReferenceException(child);
 
             AddMember(child);
 
@@ -55,6 +57,8 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             if (!MemberExists(parent))
                 throw new NotInFamilyTreeException(parent);
+            if (child.Parents != null)
+                throw new ExistingParentsReferenceException(child);
 
             child.AddFact(FactType.HasSingleParent, true);
             child.AddFact(FactType.Depth, (int)parent.Facts[FactType.Depth].Value + 1);
@@ -160,5 +164,12 @@ namespace FamilyTreeExplorer.Business.Objects
         public DuplicateParntershipException(Partnership partnership)
             : base(string.Format("Partnership Id:{0} already exists", partnership.Id)) { }
         public DuplicateParntershipException(string message) : base(message) { }
+    }
+    public class ExistingParentsReferenceException : Exception
+    {
+        public ExistingParentsReferenceException() { }
+        public ExistingParentsReferenceException(FamilyMember member)
+            : base(string.Format("Member Id:{0} already has parents.", member.Id)) { }
+        public ExistingParentsReferenceException(string message) : base(message) { }
     }
 }

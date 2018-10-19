@@ -1,9 +1,10 @@
 using FamilyTreeExplorer.Business.Objects;
 using FamilyTreeExplorer.Crosscutting.Enums;
+using FamilyTreeExplorer.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FamilyTreeExplorer.Test.Business.Objects
-{
+{   
     [TestClass]
     [TestCategory("FamilyTree_Unit")]
     public class FamilyTree_Unit
@@ -11,7 +12,7 @@ namespace FamilyTreeExplorer.Test.Business.Objects
         [TestMethod]
         public void AddInLaw_ValidInput()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var inlaw = new FamilyMember("Olaf", Gender.Male);
 
             tree.AddInLaw(inlaw);
@@ -24,7 +25,7 @@ namespace FamilyTreeExplorer.Test.Business.Objects
         [ExpectedException(typeof(DuplicateMemberException))]
         public void AddInLaw_Duplicate()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var inlaw = new FamilyMember("Olaf", Gender.Male);
 
             tree.AddInLaw(inlaw);
@@ -34,7 +35,7 @@ namespace FamilyTreeExplorer.Test.Business.Objects
         [TestMethod]
         public void AddChild_ValidInput()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var child = new FamilyMember("Olaf", Gender.Male);
 
             tree.AddChild(tree.Root, child);
@@ -48,16 +49,26 @@ namespace FamilyTreeExplorer.Test.Business.Objects
         [ExpectedException(typeof(InvalidPartnershipException))]
         public void AddChild_InvalidPartnership()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var child = new FamilyMember("Olaf", Gender.Male);
 
             tree.AddChild(new Partnership(new FamilyMember("t1", Gender.Male), new FamilyMember("t2", Gender.Female)), child);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ExistingParentsReferenceException))]
+        public void AddChild_ExistingParentsReference()
+        {
+            var tree = TreeHelper.GetTree();
+            var child = new FamilyMember("Olaf", Gender.Male);
+            child.Parents = new Parentship();
+
+            tree.AddChild(tree.Root, child);
         }
 
         [TestMethod]
         public void AddNonPartnershipChild_ValidInput()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var child = new FamilyMember("Olaf", Gender.Male);
             var parent = tree.Root.Partner1;
 
@@ -68,10 +79,21 @@ namespace FamilyTreeExplorer.Test.Business.Objects
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DuplicateMemberException))]
+        [ExpectedException(typeof(ExistingParentsReferenceException))]
+        public void AddNonPartnershipChild_ExistingParentsReference()
+        {
+            var tree = TreeHelper.GetTree();
+            var child = new FamilyMember("Olaf", Gender.Male);
+            child.Parents = new Parentship();
+
+            tree.AddNonPartnershipChild(tree.Root.Partner1, child);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExistingParentsReferenceException))]
         public void AddNonPartnershipChild_DuplicateChild()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var child = new FamilyMember("Olaf", Gender.Male);
             var parent = tree.Root.Partner1;
 
@@ -83,7 +105,7 @@ namespace FamilyTreeExplorer.Test.Business.Objects
         [ExpectedException(typeof(NotInFamilyTreeException))]
         public void AddNonPartnershipChild_InvalidParent()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var child = new FamilyMember("Olaf", Gender.Male);
             var parent = new FamilyMember("Tim", Gender.Male);
             
@@ -93,7 +115,7 @@ namespace FamilyTreeExplorer.Test.Business.Objects
         [TestMethod]
         public void AddPartnership_ValidInput()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var p1 = new FamilyMember("Olaf", Gender.Male);
             var p2 = new FamilyMember("Nancy", Gender.Female);
 
@@ -112,7 +134,7 @@ namespace FamilyTreeExplorer.Test.Business.Objects
         [ExpectedException(typeof(NotInFamilyTreeException))]
         public void AddPartnership_PartnerDoesNotExist()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var p1 = new FamilyMember("Olaf", Gender.Male);
             var p2 = new FamilyMember("Nancy", Gender.Female);
 
@@ -125,7 +147,7 @@ namespace FamilyTreeExplorer.Test.Business.Objects
         [ExpectedException(typeof(DuplicateParntershipException))]
         public void AddPartnership_Duplcate()
         {
-            var tree = GetTree();
+            var tree = TreeHelper.GetTree();
             var p1 = new FamilyMember("Olaf", Gender.Male);
             var p2 = new FamilyMember("Nancy", Gender.Female);
 
@@ -136,43 +158,6 @@ namespace FamilyTreeExplorer.Test.Business.Objects
             tree.AddPartnership(p1, p2);
         }
 
-        private FamilyTree GetRootTree()
-        {
-            FamilyMember greg = new FamilyMember("Greg", Gender.Male),
-                pam = new FamilyMember("Pam", Gender.Female);
 
-            var tree = new FamilyTree(new Partnership(greg, pam));
-            var root = tree.Root;
-
-            return tree;
-        }
-        private FamilyTree GetTree()
-        {
-            FamilyMember greg = new FamilyMember("Greg", Gender.Male),
-                pam = new FamilyMember("Pam", Gender.Female),
-                jeff = new FamilyMember("Jeff", Gender.Male),
-                brent = new FamilyMember("Brent", Gender.Male),
-                kyle = new FamilyMember("Kyle", Gender.Male),
-                jaclyn = new FamilyMember("Jaclyn", Gender.Female),
-                roxi = new FamilyMember("Roxi", Gender.Female),
-                della = new FamilyMember("Della", Gender.Female),
-                aura = new FamilyMember("Aura", Gender.Female);
-
-            var tree = new FamilyTree(new Partnership(greg, pam));
-            var root = tree.Root;
-            tree.AddChild(root, jeff);
-            tree.AddChild(root, brent);
-            tree.AddChild(root, kyle);
-            tree.AddInLaw(jaclyn);
-            tree.AddInLaw(aura);
-
-            var brentJaclyn = tree.AddPartnership(brent, jaclyn);
-            tree.AddChild(brentJaclyn, roxi);
-            tree.AddChild(brentJaclyn, della);
-
-            var jeffAura = tree.AddPartnership(jeff, aura);
-
-            return tree;
-        }
     }
 }
