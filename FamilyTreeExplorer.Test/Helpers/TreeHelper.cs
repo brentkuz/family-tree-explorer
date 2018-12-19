@@ -13,7 +13,7 @@ namespace FamilyTreeExplorer.Test.Helpers
             FamilyMember greg = new FamilyMember("Greg", Gender.Male),
                 pam = new FamilyMember("Pam", Gender.Female);
 
-            var tree = new FamilyTree(new Partnership(greg, pam));
+            var tree = new FamilyTree(new Partnership(greg, pam), pam);
             var root = tree.Root;
 
             return tree;
@@ -30,7 +30,7 @@ namespace FamilyTreeExplorer.Test.Helpers
                 della = new FamilyMember("Della", Gender.Female),
                 aura = new FamilyMember("Aura", Gender.Female);
 
-            var tree = new FamilyTree(new Partnership(greg, pam));
+            var tree = new FamilyTree(new Partnership(greg, pam), pam);
             var root = tree.Root;
             tree.AddChild(root, jeff);
             tree.AddChild(root, brent);

@@ -19,7 +19,7 @@ namespace FamilyTreeExplorer.ConsoleApp
                 aura = new FamilyMember("Aura", Gender.Female),
                 ping = new FamilyMember("Ping", Gender.Male);
 
-            var tree = new FamilyTree(new Partnership(greg, pam));
+            var tree = new FamilyTree(new Partnership(greg, pam), pam);
             var root = tree.Root;
             tree.AddChild(root, jeff);
             tree.AddChild(root, brent);

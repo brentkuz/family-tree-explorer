@@ -20,13 +20,13 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
         {
             source.AddFact(FactType.XPosition, 0);
             source.AddFact(FactType.YPosition, 0);
-            Below(source.Parents, 0, 0);
-            Above(source.Parents, 0, 0);
+            Below(source.Parents ?? tree.Root, 0, 0);
+            Above(source.Parents ?? tree.Root, 0, 0);
         }
 
         private void Below(ChildBearingBase n, int x, int y)
         {
-            if (n == null)
+            if (n == null || !n.HasChildren())
                 return;
 
             MarkedChildBearingBases.Add(n);
@@ -57,8 +57,34 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
         }
 
         private void Above(ChildBearingBase n, int x, int y)
-        {
+        {            
+            if(n is Parentship)
+            {
+                FamilyMember nextParent = ((Parentship)n).Partner1;
+                MarkedMembers.Add(nextParent);
+                //ensure that we recurse over non-inlaw partner
+                if (n is Partnership)
+                {
+                    var partnership = n as Partnership;
+                    var otherPartner = partnership.OtherPartner(nextParent);
+                    MarkedMembers.Add(otherPartner);
+                    if (nextParent.HasFact(FactType.InLaw))
+                    {
+                        nextParent = otherPartner;
+                    }
+                }
 
+                //recurse through nextParent parentships/partnerships
+                foreach(ChildBearingBase p in nextParent)
+                {
+                    if (!MarkedChildBearingBases.Contains(p))
+                        Below(p, x, y);
+                }
+
+                //move up
+                if (!MarkedChildBearingBases.Contains(nextParent.Parents))
+                    Above(nextParent.Parents, x, y);
+            }
         }
     }
 }

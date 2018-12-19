@@ -12,7 +12,7 @@ namespace FamilyTreeExplorer.Business.Objects
         private Dictionary<Guid, FamilyMember> members = new Dictionary<Guid, FamilyMember>();
         private Dictionary<Guid, Partnership> partnerships = new Dictionary<Guid, Partnership>();
 
-        public FamilyTree(Partnership root)
+        public FamilyTree(Partnership root, FamilyMember inlaw)
         {
             this.Root = root;
             if (root.Partner1 != null)
@@ -25,6 +25,8 @@ namespace FamilyTreeExplorer.Business.Objects
                 root.Partner2.AddFact(FactType.Depth, 0);
                 AddMember(root.Partner2);
             }
+
+            inlaw.AddFact(FactType.InLaw, true);
 
             AddPartnership(root);
         }
