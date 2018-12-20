@@ -1,4 +1,5 @@
-﻿using FamilyTreeExplorer.Business.Objects;
+﻿using FamilyTreeExplorer.Business.FactAlgorithms;
+using FamilyTreeExplorer.Business.Objects;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using System;
 
@@ -34,6 +35,10 @@ namespace FamilyTreeExplorer.ConsoleApp
             var jeffAura = tree.AddPartnership(jeff, aura);
 
             tree.AddNonPartnershipChild(kyle, ping);
+
+
+            var alg = new FindBasicRelationships(tree, greg);
+            
 
             foreach (FamilyMember fm in tree)
                 DisplayMemberWithFacts(fm);

@@ -20,6 +20,7 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             var source = tree.Root.Children[0];
             var find = new FindBasicRelationships(tree, source);
             Assert.AreEqual(tree.Count, find.MarkedMembers.Count);
+
             //case 2
             source = tree.Root.Children[1].Partnerships[0].Children[0];
             find = new FindBasicRelationships(tree, source);

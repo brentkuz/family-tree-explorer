@@ -145,7 +145,7 @@ namespace FamilyTreeExplorer.Test.Business.Objects
 
         [TestMethod]
         [ExpectedException(typeof(DuplicateParntershipException))]
-        public void AddPartnership_Duplcate()
+        public void AddPartnership_Duplicate()
         {
             var tree = TreeHelper.GetTree();
             var p1 = new FamilyMember("Olaf", Gender.Male);
