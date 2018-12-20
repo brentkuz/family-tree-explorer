@@ -158,6 +158,6 @@ namespace FamilyTreeExplorer.Test.Business.Objects
             tree.AddPartnership(p1, p2);
         }
 
-
+   
     }
 }

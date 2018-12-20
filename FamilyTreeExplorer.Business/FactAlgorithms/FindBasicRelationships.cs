@@ -10,6 +10,11 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
     {
         public FindBasicRelationships(FamilyTree tree, FamilyMember source) : base(tree, source)
         {
+            //prevent source from being inlaw. Inlaws do not have parents, which
+            //breaks recursion.
+            if (source.HasFact(FactType.InLaw))
+                throw new InvalidSourceException(source);
+
             this.source = source;
         }
 
@@ -17,11 +22,9 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
         public HashSet<ChildBearingBase> MarkedChildBearingBases { get; set; } = new HashSet<ChildBearingBase>();
 
         protected override void Execute()
-        {
-            source.AddFact(FactType.XPosition, 0);
-            source.AddFact(FactType.YPosition, 0);
-            Below(source.Parents ?? tree.Root, 0, 0, 0);
-            Above(source.Parents ?? tree.Root, 0, -1);
+        {            
+            Below(source.Parents ?? tree.Root, 0, source.Parents == null ? 1 : 0, source.Parents == null ? 1 : 0);
+            Above(source.Parents ?? tree.Root, 0, source.Parents == null ? 0 : -1);
         }
 
         private void Below(ChildBearingBase n, int x, int y, int ancestorY)
@@ -29,7 +32,8 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
             if (n == null || !n.HasChildren())
                 return;
 
-            int currX = Math.Abs(ancestorY) - Math.Abs(y), currY = y;
+            int currX = Math.Abs(ancestorY) - Math.Abs(y), 
+                currY = y;
 
             MarkedChildBearingBases.Add(n);
 

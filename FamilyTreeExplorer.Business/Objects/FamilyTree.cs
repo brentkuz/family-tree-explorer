@@ -111,6 +111,10 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             return partnerships.ContainsKey(id);
         }
+        public bool InLawAlreadyInPartnership(FamilyMember inlaw)
+        {
+            return partnerships.Values.Where(x => x.Partner1 == inlaw || x.Partner2 == inlaw).SingleOrDefault() != null;
+        }
         public FamilyMember GetMemberById(Guid id)
         {
             return members[id];
@@ -145,7 +149,7 @@ namespace FamilyTreeExplorer.Business.Objects
     {
         public NotInFamilyTreeException() { }
         public NotInFamilyTreeException(FamilyMember member) 
-            : base(string.Format("Partner is not a member of the tree", member.Id)) { }
+            : base(string.Format("Partner Id:{0} is not a member of the tree", member.Id)) { }
         public NotInFamilyTreeException(string message) : base(message) { }
     }
     public class DuplicateMemberException : Exception

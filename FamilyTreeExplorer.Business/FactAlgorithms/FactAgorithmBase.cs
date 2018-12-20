@@ -26,4 +26,12 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
         }
         protected abstract void Execute();
     }
+
+    public class InvalidSourceException : Exception
+    {
+        public InvalidSourceException() { }
+        public InvalidSourceException(FamilyMember member)
+            : base(string.Format("Source family member Id:{0} is an invalid starting point for the algorithm.", member.Id)) { }
+        public InvalidSourceException(string message) : base(message) { }
+    }
 }

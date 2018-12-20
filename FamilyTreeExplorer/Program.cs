@@ -36,7 +36,7 @@ namespace FamilyTreeExplorer.ConsoleApp
 
             tree.AddNonPartnershipChild(kyle, ping);
 
-
+            //test
             var alg = new FindBasicRelationships(tree, greg);
             
 
