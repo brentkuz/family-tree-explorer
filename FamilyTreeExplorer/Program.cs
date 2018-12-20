@@ -18,7 +18,11 @@ namespace FamilyTreeExplorer.ConsoleApp
                 roxi = new FamilyMember("Roxi", Gender.Female),
                 della = new FamilyMember("Della", Gender.Female),
                 aura = new FamilyMember("Aura", Gender.Female),
-                ping = new FamilyMember("Ping", Gender.Male);
+                ping = new FamilyMember("Ping", Gender.Male),
+                guy = new FamilyMember("Guy", Gender.Male),
+                nancy = new FamilyMember("Nancy", Gender.Female),
+                timmy = new FamilyMember("Timmy", Gender.Male),
+                leroy = new FamilyMember("Leroy", Gender.Male);
 
             var tree = new FamilyTree(new Partnership(greg, pam), pam);
             var root = tree.Root;
@@ -27,7 +31,9 @@ namespace FamilyTreeExplorer.ConsoleApp
             tree.AddChild(root, kyle);
             tree.AddInLaw(jaclyn);
             tree.AddInLaw(aura);
-            
+            tree.AddInLaw(guy);
+            tree.AddInLaw(nancy);
+
             var brentJaclyn = tree.AddPartnership(brent, jaclyn);
             tree.AddChild(brentJaclyn, roxi);
             tree.AddChild(brentJaclyn, della);
@@ -36,10 +42,18 @@ namespace FamilyTreeExplorer.ConsoleApp
 
             tree.AddNonPartnershipChild(kyle, ping);
 
-            //test
-            var alg = new FindBasicRelationships(tree, greg);
-            
+            var roxiGuy = tree.AddPartnership(roxi, guy);
+            tree.AddChild(roxiGuy, timmy);
 
+            var pingNancy = tree.AddPartnership(ping, nancy);
+            tree.AddChild(pingNancy, leroy);
+
+
+            var source = timmy;
+            var alg = new FindBasicRelationships(tree, source);
+
+
+            Console.WriteLine("Source: " + source.Name);
             foreach (FamilyMember fm in tree)
                 DisplayMemberWithFacts(fm);
 

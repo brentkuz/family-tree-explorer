@@ -13,13 +13,14 @@ namespace FamilyTreeExplorer.Crosscutting.Enums
         Aunt,
         Uncle,
         Grandmother,
-        GrandFather,
+        Grandfather,
         Niece,
         Nephew,
         Son,
         Daughter,
         Grandson,
         Granddaughter,
-        Cousin
+        Cousin,
+        Spouse
     }
 }

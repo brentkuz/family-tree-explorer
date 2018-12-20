@@ -123,6 +123,13 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             return partnerships[id];
         }
+        public void ClearMemberFacts()
+        {
+            foreach(var memb in members.Values)
+            {
+                memb.ClearAllFacts();
+            }
+        }
 
         public IEnumerator GetEnumerator()
         {
