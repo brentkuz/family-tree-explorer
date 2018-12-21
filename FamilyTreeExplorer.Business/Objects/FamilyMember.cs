@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FamilyTreeExplorer.Business.Objects
 {
-    public class FamilyMember : TreeNode, IEnumerable, IFactual
+    public class FamilyMember : TreeNode, IFamilyMember
     {
         public FamilyMember()
         {

@@ -7,6 +7,6 @@ namespace FamilyTreeExplorer.Business.Objects.Relationships
 {
     public class Parentship : ChildBearingBase
     {
-        public FamilyMember Partner1 { get; set; }
+        public IFamilyMember Partner1 { get; set; }
     }
 }

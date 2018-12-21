@@ -12,8 +12,8 @@ using System.Text;
 namespace FamilyTreeExplorer.Test.FactAlorithms
 {
     [TestClass]
-    [TestCategory("FindBasicRelationships_Unit")]
-    public class FindBasicRelationships_Unit
+    [TestCategory("FindBasicRelationships_Integration")]
+    public class FindBasicRelationships_Integration
     {
         FamilyMember greg = new FamilyMember("Greg", Gender.Male),
             pam = new FamilyMember("Pam", Gender.Female),

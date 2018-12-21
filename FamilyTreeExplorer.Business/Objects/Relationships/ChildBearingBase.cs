@@ -10,12 +10,12 @@ namespace FamilyTreeExplorer.Business.Objects.Relationships
         public ChildBearingBase()
         {
         }
-        public List<FamilyMember> Children { get; set; } = new List<FamilyMember>();
+        public List<IFamilyMember> Children { get; set; } = new List<IFamilyMember>();
         public bool HasChildren()
         {
             return Children.Count > 0;
         }
-        public bool ChildExists(FamilyMember member)
+        public bool ChildExists(IFamilyMember member)
         {
             return Children.Contains(member);
         }

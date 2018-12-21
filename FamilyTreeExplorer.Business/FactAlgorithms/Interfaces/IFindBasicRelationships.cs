@@ -9,7 +9,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.Interfaces
 {
     public interface IFindBasicRelationships : IExecutable
     {
-        HashSet<FamilyMember> MarkedMembers { get; set; }
+        HashSet<IFamilyMember> MarkedMembers { get; set; }
         HashSet<ChildBearingBase> MarkedChildBearingBases { get; set; }
     }
 }

@@ -9,16 +9,16 @@ namespace FamilyTreeExplorer.Business.Objects.Interfaces
         int Count { get; }
         Partnership Root { get; }
 
-        void SetRoot(Partnership root, FamilyMember inlaw);
-        void AddChild(Partnership partnership, FamilyMember child);
-        void AddInLaw(FamilyMember inlaw);
-        void AddNonPartnershipChild(FamilyMember parent, FamilyMember child);
-        Partnership AddPartnership(FamilyMember partner1, FamilyMember partner2);
+        void SetRoot(Partnership root, IFamilyMember inlaw);
+        void AddChild(Partnership partnership, IFamilyMember child);
+        void AddInLaw(IFamilyMember inlaw);
+        void AddNonPartnershipChild(IFamilyMember parent, IFamilyMember child);
+        Partnership AddPartnership(IFamilyMember partner1, IFamilyMember partner2);
         void ClearMemberFacts();
-        FamilyMember GetMemberById(Guid id);
+        IFamilyMember GetMemberById(Guid id);
         Partnership GetPartnershipById(Guid id);
-        bool InLawAlreadyInPartnership(FamilyMember inlaw);
-        bool MemberExists(FamilyMember member);
+        bool InLawAlreadyInPartnership(IFamilyMember inlaw);
+        bool MemberExists(IFamilyMember member);
         bool MemberExists(Guid id);
         bool PartnershipExists(Guid id);
         bool PartnershipExists(Partnership partnership);

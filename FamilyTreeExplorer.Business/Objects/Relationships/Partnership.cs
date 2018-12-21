@@ -8,7 +8,7 @@ namespace FamilyTreeExplorer.Business.Objects.Relationships
 {
     public class Partnership : Parentship
     {
-        public Partnership(FamilyMember partner1, FamilyMember partner2, bool isDivorced = false)
+        public Partnership(IFamilyMember partner1, IFamilyMember partner2, bool isDivorced = false)
         {
             Id = Guid.NewGuid();
             Partner1 = partner1;
@@ -20,9 +20,9 @@ namespace FamilyTreeExplorer.Business.Objects.Relationships
 
         public bool IsDivorced { get; set; }
 
-        public FamilyMember Partner2 { get; set; }
+        public IFamilyMember Partner2 { get; set; }
 
-        public FamilyMember OtherPartner(FamilyMember member)
+        public IFamilyMember OtherPartner(IFamilyMember member)
         {
             if (member == Partner1)
                 return Partner2;
@@ -30,7 +30,7 @@ namespace FamilyTreeExplorer.Business.Objects.Relationships
                 return Partner1;
         }
 
-        public FamilyMember GetInLaw()
+        public IFamilyMember GetInLaw()
         {
             if (Partner1.HasFact(FactType.InLaw))
                 return Partner1;

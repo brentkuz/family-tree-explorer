@@ -11,10 +11,10 @@ using System.Text;
 namespace FamilyTreeExplorer.Test.FactAlorithms
 {
     [TestClass]
-    [TestCategory("ResolveRelationshipNames_Unit")]
-    public class ResolveRelationshipNames_Unit
+    [TestCategory("ResolveRelationshipNames_Integration")]
+    public class ResolveRelationshipNames_Integration
     {
-        FamilyMember greg = new FamilyMember("Greg", Gender.Male),
+        IFamilyMember greg = new FamilyMember("Greg", Gender.Male),
         pam = new FamilyMember("Pam", Gender.Female),
         jeff = new FamilyMember("Jeff", Gender.Male),
         brent = new FamilyMember("Brent", Gender.Male),
@@ -68,18 +68,18 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             alg.Execute();
         }
 
-        [TestMethod]
-        public void Execute_ForParents()
-        {
-            DoFindBasicRelationships(roxi);
-            var alg = new ResolveRelationshipNames(tree, tree.Root.Partner1);
-            alg.Execute();
+        //[TestMethod]
+        //public void Execute_ForParents()
+        //{
+        //    DoFindBasicRelationships(roxi);
+        //    var alg = new ResolveRelationshipNames(tree, tree.Root.Partner1);
+        //    alg.Execute();
 
-            Assert.AreEqual(RelationshipType.Parent, brent.GetFactValue<RelationshipType>(FactType.Relationship));
+        //    Assert.AreEqual(RelationshipType.Parent, brent.GetFactValue<RelationshipType>(FactType.Relationship));
 
-        }
+        //}
 
-        private void DoFindBasicRelationships(FamilyMember source)
+        private void DoFindBasicRelationships(IFamilyMember source)
         {
             new FindBasicRelationships(tree, source);
         }

@@ -11,7 +11,7 @@ namespace FamilyTreeExplorer.Business.Objects
 {
     public class FamilyTree : IFamilyTree
     {
-        private Dictionary<Guid, FamilyMember> members = new Dictionary<Guid, FamilyMember>();
+        private Dictionary<Guid, IFamilyMember> members = new Dictionary<Guid, IFamilyMember>();
         private Dictionary<Guid, Partnership> partnerships = new Dictionary<Guid, Partnership>();
 
         public FamilyTree()
@@ -21,7 +21,7 @@ namespace FamilyTreeExplorer.Business.Objects
         public Partnership Root { get; protected set; }
         public int Count { get { return members.Count; } }
 
-        public void SetRoot(Partnership root, FamilyMember inlaw)
+        public void SetRoot(Partnership root, IFamilyMember inlaw)
         {
             this.Root = root;
             if (root.Partner1 != null)
@@ -40,12 +40,12 @@ namespace FamilyTreeExplorer.Business.Objects
             AddPartnership(root);
         }
 
-        public void AddInLaw(FamilyMember inlaw)
+        public void AddInLaw(IFamilyMember inlaw)
         {
             inlaw.AddFact(FactType.InLaw, true);
             AddMember(inlaw);
         }
-        public void AddChild(Partnership partnership, FamilyMember child)
+        public void AddChild(Partnership partnership, IFamilyMember child)
         {
             if (partnership != null && !PartnershipExists(partnership))
                 throw new InvalidPartnershipException("Cannot add children to a partnership that does not exist.");
@@ -61,7 +61,7 @@ namespace FamilyTreeExplorer.Business.Objects
             int depth = (int)(partnership.Partner1.Facts[FactType.Depth]?.Value ?? partnership.Partner2.Facts[FactType.Depth]?.Value) + 1;
             child.AddFact(FactType.Depth, depth);
         }
-        public void AddNonPartnershipChild(FamilyMember parent, FamilyMember child)
+        public void AddNonPartnershipChild(IFamilyMember parent, IFamilyMember child)
         {
             if (!MemberExists(parent))
                 throw new NotInFamilyTreeException(parent);
@@ -74,7 +74,7 @@ namespace FamilyTreeExplorer.Business.Objects
             parent.NonPartnership.Children.Add(child);
             child.Parents = parent.NonPartnership;
         }
-        public Partnership AddPartnership(FamilyMember partner1, FamilyMember partner2)
+        public Partnership AddPartnership(IFamilyMember partner1, IFamilyMember partner2)
         {
             var p1Exists = MemberExists(partner1);
             var p2Exists = MemberExists(partner2);
@@ -84,7 +84,7 @@ namespace FamilyTreeExplorer.Business.Objects
 
             var partnership = new Partnership(partner1, partner2);
 
-            FamilyMember blood = null,
+            IFamilyMember blood = null,
                 inlaw = null;
 
             inlaw = partner1.HasFact(FactType.InLaw) ? partner1 : partner2;
@@ -96,7 +96,7 @@ namespace FamilyTreeExplorer.Business.Objects
             return partnership;
         }
 
-        public bool MemberExists(FamilyMember member)
+        public bool MemberExists(IFamilyMember member)
         {
             return members.ContainsValue(member);
         }
@@ -117,11 +117,11 @@ namespace FamilyTreeExplorer.Business.Objects
         {
             return partnerships.ContainsKey(id);
         }
-        public bool InLawAlreadyInPartnership(FamilyMember inlaw)
+        public bool InLawAlreadyInPartnership(IFamilyMember inlaw)
         {
             return partnerships.Values.Where(x => x.Partner1 == inlaw || x.Partner2 == inlaw).SingleOrDefault() != null;
         }
-        public FamilyMember GetMemberById(Guid id)
+        public IFamilyMember GetMemberById(Guid id)
         {
             return members[id];
         }
@@ -143,7 +143,7 @@ namespace FamilyTreeExplorer.Business.Objects
                 yield return x;
         }
 
-        private void AddMember(FamilyMember member)
+        private void AddMember(IFamilyMember member)
         {
             if (MemberExists(member))
                 throw new DuplicateMemberException(member);
@@ -161,14 +161,14 @@ namespace FamilyTreeExplorer.Business.Objects
     public class NotInFamilyTreeException : Exception
     {
         public NotInFamilyTreeException() { }
-        public NotInFamilyTreeException(FamilyMember member) 
+        public NotInFamilyTreeException(IFamilyMember member) 
             : base(string.Format("Partner Id:{0} is not a member of the tree", member.Id)) { }
         public NotInFamilyTreeException(string message) : base(message) { }
     }
     public class DuplicateMemberException : Exception
     {
         public DuplicateMemberException() { }
-        public DuplicateMemberException(FamilyMember member)
+        public DuplicateMemberException(IFamilyMember member)
             : base(string.Format("Member Id:{0} is already a member of the tree", member.Id)) { }
         public DuplicateMemberException(string message) : base(message) { }
     }
@@ -187,7 +187,7 @@ namespace FamilyTreeExplorer.Business.Objects
     public class ExistingParentsReferenceException : Exception
     {
         public ExistingParentsReferenceException() { }
-        public ExistingParentsReferenceException(FamilyMember member)
+        public ExistingParentsReferenceException(IFamilyMember member)
             : base(string.Format("Member Id:{0} already has parents.", member.Id)) { }
         public ExistingParentsReferenceException(string message) : base(message) { }
     }

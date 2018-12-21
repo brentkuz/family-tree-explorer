@@ -11,17 +11,11 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
 {
     public class FindBasicRelationships : FactAgorithmBase, IFindBasicRelationships
     {
-        public FindBasicRelationships(IFamilyTree tree, FamilyMember source) : base(tree, source)
+        public FindBasicRelationships(IFamilyTree tree, IFamilyMember source) : base(tree, source)
         {
-            //prevent source from being inlaw. Inlaws do not have parents, which
-            //breaks recursion.
-            if (source.HasFact(FactType.InLaw))
-                throw new InvalidSourceException(source);
-
-            this.source = source;
         }
 
-        public HashSet<FamilyMember> MarkedMembers { get; set; } = new HashSet<FamilyMember>();
+        public HashSet<IFamilyMember> MarkedMembers { get; set; } = new HashSet<IFamilyMember>();
         public HashSet<ChildBearingBase> MarkedChildBearingBases { get; set; } = new HashSet<ChildBearingBase>();
 
         public override void Execute()
@@ -78,7 +72,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
            // MarkedChildBearingBases.Add(n);
             if (n is Parentship)
             {
-                FamilyMember nextParent = ((Parentship)n).Partner1;
+                IFamilyMember nextParent = ((Parentship)n).Partner1;
                 //set relative position
                 nextParent.AddFact(FactType.XPosition, x);
                 nextParent.AddFact(FactType.YPosition, y);
