@@ -6,20 +6,15 @@ namespace FamilyTreeExplorer.Crosscutting.Enums
 {
     public enum RelationshipType
     {
-        Mother,
-        Father, 
-        Sister,
-        Brother,
+        Parent,
+        Sibling,
         Aunt,
         Uncle,
-        Grandmother,
-        Grandfather,
+        Grandparent,
         Niece,
         Nephew,
-        Son,
-        Daughter,
-        Grandson,
-        Granddaughter,
+        Child,
+        Grandchild,
         Cousin,
         Spouse
     }

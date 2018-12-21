@@ -1,4 +1,5 @@
 using FamilyTreeExplorer.Business.Objects;
+using FamilyTreeExplorer.Business.Objects.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using FamilyTreeExplorer.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

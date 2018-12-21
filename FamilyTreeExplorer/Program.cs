@@ -1,5 +1,6 @@
 ﻿using FamilyTreeExplorer.Business.FactAlgorithms;
 using FamilyTreeExplorer.Business.Objects;
+using FamilyTreeExplorer.Business.Objects.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using System;
 
@@ -24,7 +25,8 @@ namespace FamilyTreeExplorer.ConsoleApp
                 timmy = new FamilyMember("Timmy", Gender.Male),
                 leroy = new FamilyMember("Leroy", Gender.Male);
 
-            var tree = new FamilyTree(new Partnership(greg, pam), pam);
+            var tree = new FamilyTree();
+            tree.SetRoot(new Partnership(greg, pam), pam);
             var root = tree.Root;
             tree.AddChild(root, jeff);
             tree.AddChild(root, brent);
@@ -51,7 +53,7 @@ namespace FamilyTreeExplorer.ConsoleApp
 
             var source = timmy;
             var alg = new FindBasicRelationships(tree, source);
-
+            alg.Execute();
 
             Console.WriteLine("Source: " + source.Name);
             foreach (FamilyMember fm in tree)

@@ -1,4 +1,6 @@
-﻿using FamilyTreeExplorer.Crosscutting.Enums;
+﻿using FamilyTreeExplorer.Business.Objects.Interfaces;
+using FamilyTreeExplorer.Business.Objects.Relationships;
+using FamilyTreeExplorer.Crosscutting.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,18 +9,25 @@ using System.Text;
 
 namespace FamilyTreeExplorer.Business.Objects
 {
-    public class FamilyTree : IEnumerable
+    public class FamilyTree : IFamilyTree
     {
         private Dictionary<Guid, FamilyMember> members = new Dictionary<Guid, FamilyMember>();
         private Dictionary<Guid, Partnership> partnerships = new Dictionary<Guid, Partnership>();
 
-        public FamilyTree(Partnership root, FamilyMember inlaw)
+        public FamilyTree()
+        {
+        }
+
+        public Partnership Root { get; protected set; }
+        public int Count { get { return members.Count; } }
+
+        public void SetRoot(Partnership root, FamilyMember inlaw)
         {
             this.Root = root;
             if (root.Partner1 != null)
             {
                 root.Partner1.AddFact(FactType.Depth, 0);
-                AddMember(root.Partner1);                 
+                AddMember(root.Partner1);
             }
             if (root.Partner2 != null)
             {
@@ -30,9 +39,6 @@ namespace FamilyTreeExplorer.Business.Objects
 
             AddPartnership(root);
         }
-
-        public Partnership Root { get; set; }
-        public int Count { get { return members.Count; } }
 
         public void AddInLaw(FamilyMember inlaw)
         {

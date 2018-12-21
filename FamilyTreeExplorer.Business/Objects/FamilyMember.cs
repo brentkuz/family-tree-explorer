@@ -1,4 +1,5 @@
 ﻿using FamilyTreeExplorer.Business.Objects.Interfaces;
+using FamilyTreeExplorer.Business.Objects.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using System;
 using System.Collections;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace FamilyTreeExplorer.Business.Objects
 {
-    public class FamilyMember : TreeNode, IFactual, IEnumerable
+    public class FamilyMember : TreeNode, IEnumerable, IFactual
     {
         public FamilyMember()
         {

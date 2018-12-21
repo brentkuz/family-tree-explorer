@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FamilyTreeExplorer.Business.Objects
+namespace FamilyTreeExplorer.Business.Objects.Relationships
 {
     public class Partnership : Parentship
     {

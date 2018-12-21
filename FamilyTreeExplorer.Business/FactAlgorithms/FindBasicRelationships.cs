@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using FamilyTreeExplorer.Business.FactAlgorithms.Interfaces;
 using FamilyTreeExplorer.Business.Objects;
+using FamilyTreeExplorer.Business.Objects.Interfaces;
+using FamilyTreeExplorer.Business.Objects.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 
 namespace FamilyTreeExplorer.Business.FactAlgorithms
 {
-    public class FindBasicRelationships : FactAgorithmBase
+    public class FindBasicRelationships : FactAgorithmBase, IFindBasicRelationships
     {
-        public FindBasicRelationships(FamilyTree tree, FamilyMember source) : base(tree, source)
+        public FindBasicRelationships(IFamilyTree tree, FamilyMember source) : base(tree, source)
         {
             //prevent source from being inlaw. Inlaws do not have parents, which
             //breaks recursion.
@@ -21,7 +24,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
         public HashSet<FamilyMember> MarkedMembers { get; set; } = new HashSet<FamilyMember>();
         public HashSet<ChildBearingBase> MarkedChildBearingBases { get; set; } = new HashSet<ChildBearingBase>();
 
-        protected override void Execute()
+        public override void Execute()
         {            
             Below(source.Parents ?? tree.Root, 0, source.Parents == null ? 1 : 0, source.Parents == null ? 1 : 0);
             Above(source.Parents ?? tree.Root, 0, source.Parents == null ? 0 : -1);
@@ -111,14 +114,6 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
                 }
             }
         }
-
-        private void SetRelativePositionFact(FamilyMember current, FamilyMember source, int currentX, int currentY)
-        {
-            int sourceX = source.GetFactValue<int>(FactType.XPosition),
-                sourceY = source.GetFactValue<int>(FactType.YPosition);
-
-            current.AddFact(FactType.XPosition, currentX + Math.Abs(sourceY));
-            current.AddFact(FactType.YPosition, currentY);
-        }
+        
     }
 }
