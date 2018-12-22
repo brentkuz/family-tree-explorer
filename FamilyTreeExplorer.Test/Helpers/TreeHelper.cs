@@ -1,5 +1,5 @@
-﻿using FamilyTreeExplorer.Business.Objects;
-using FamilyTreeExplorer.Business.Objects.Relationships;
+﻿using FamilyTreeExplorer.Business.FamilyTree;
+using FamilyTreeExplorer.Business.FamilyTree.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using System;
 using System.Collections.Generic;

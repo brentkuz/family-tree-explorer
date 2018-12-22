@@ -1,17 +1,19 @@
-﻿using FamilyTreeExplorer.Business.Objects.Interfaces;
+﻿using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FamilyTreeExplorer.Business.Objects.Relationships
+namespace FamilyTreeExplorer.Business.FamilyTree.Relationships
 {
-    public class Partnership : Parentship
+    public class Partnership : Parentship, IPartnership
     {
-        public Partnership(IFamilyMember partner1, IFamilyMember partner2, bool isDivorced = false)
+        public Partnership()
         {
-            Id = Guid.NewGuid();
-            Partner1 = partner1;
+
+        }
+        public Partnership(IFamilyMember partner1, IFamilyMember partner2, bool isDivorced = false) : base(partner1)
+        {
             Partner2 = partner2;
             partner1.Partnerships.Add(this);
             partner2.Partnerships.Add(this);

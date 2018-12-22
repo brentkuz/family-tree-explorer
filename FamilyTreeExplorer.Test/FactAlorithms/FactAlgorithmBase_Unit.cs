@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Moq;
-using FamilyTreeExplorer.Business.Objects.Interfaces;
+using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
 using FamilyTreeExplorer.Business.FactAlgorithms;
-using FamilyTreeExplorer.Business.Objects;
-using FamilyTreeExplorer.Business.Objects.Relationships;
+using FamilyTreeExplorer.Business.FamilyTree;
+using FamilyTreeExplorer.Business.FamilyTree.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 
 namespace FamilyTreeExplorer.Test.FactAlorithms

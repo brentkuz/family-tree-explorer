@@ -1,11 +1,11 @@
-﻿using FamilyTreeExplorer.Business.Objects.Interfaces;
+﻿using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FamilyTreeExplorer.Business.Objects.Relationships
+namespace FamilyTreeExplorer.Business.FamilyTree.Relationships
 {
-    public abstract class ChildBearingBase : IdentityBase
+    public abstract class ChildBearingBase : IdentityBase, IChildBearingBase
     {
         public ChildBearingBase()
         {

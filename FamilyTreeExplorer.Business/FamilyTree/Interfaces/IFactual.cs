@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FamilyTreeExplorer.Business.Objects.Interfaces
+namespace FamilyTreeExplorer.Business.FamilyTree.Interfaces
 {
     public interface IFactual
     {

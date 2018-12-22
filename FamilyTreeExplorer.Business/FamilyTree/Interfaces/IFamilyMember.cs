@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using FamilyTreeExplorer.Business.Objects.Interfaces;
-using FamilyTreeExplorer.Business.Objects.Relationships;
+using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
+using FamilyTreeExplorer.Business.FamilyTree.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 
-namespace FamilyTreeExplorer.Business.Objects.Interfaces
+namespace FamilyTreeExplorer.Business.FamilyTree.Interfaces
 {
     public interface IFamilyMember : IEnumerable, IFactual
     {
@@ -13,9 +13,9 @@ namespace FamilyTreeExplorer.Business.Objects.Interfaces
         Dictionary<FactType, Fact> Facts { get; set; }
         Gender Gender { get; set; }
         string Name { get; set; }
-        Parentship NonPartnership { get; set; }
-        Parentship Parents { get; set; }
-        List<Partnership> Partnerships { get; set; }
+        IParentship NonPartnership { get; set; }
+        IParentship Parents { get; set; }
+        List<IPartnership> Partnerships { get; set; }
         
         bool HasChildren();
         bool HasPartnerships();

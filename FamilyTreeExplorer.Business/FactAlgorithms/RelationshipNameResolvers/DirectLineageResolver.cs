@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FamilyTreeExplorer.Business.Objects;
+using FamilyTreeExplorer.Business.FamilyTree;
 
 namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
 {

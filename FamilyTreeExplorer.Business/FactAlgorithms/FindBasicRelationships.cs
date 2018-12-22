@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using FamilyTreeExplorer.Business.FactAlgorithms.Interfaces;
-using FamilyTreeExplorer.Business.Objects;
-using FamilyTreeExplorer.Business.Objects.Interfaces;
-using FamilyTreeExplorer.Business.Objects.Relationships;
+using FamilyTreeExplorer.Business.FamilyTree;
+using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
+using FamilyTreeExplorer.Business.FamilyTree.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 
 namespace FamilyTreeExplorer.Business.FactAlgorithms
@@ -16,7 +16,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
         }
 
         public HashSet<IFamilyMember> MarkedMembers { get; set; } = new HashSet<IFamilyMember>();
-        public HashSet<ChildBearingBase> MarkedChildBearingBases { get; set; } = new HashSet<ChildBearingBase>();
+        public HashSet<IChildBearingBase> MarkedChildBearingBases { get; set; } = new HashSet<IChildBearingBase>();
 
         public override void Execute()
         {            
@@ -24,7 +24,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
             Above(source.Parents ?? tree.Root, 0, source.Parents == null ? 0 : -1);
         }
 
-        private void Below(ChildBearingBase n, int x, int y, int ancestorY)
+        private void Below(IChildBearingBase n, int x, int y, int ancestorY)
         {
             if (n == null || !n.HasChildren())
                 return;
@@ -44,7 +44,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
 
                     MarkedMembers.Add(ch);
                     //children
-                    foreach (ChildBearingBase p in ch)
+                    foreach (IChildBearingBase p in ch)
                         Below(p, currX, currY+1, ancestorY);
                     //partners and there children
                     foreach(var p in ch.Partnerships)
@@ -57,7 +57,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
                             partner.AddFact(FactType.YPosition, y);
 
                             MarkedMembers.Add(partner);
-                            foreach (ChildBearingBase pCh in partner)
+                            foreach (IChildBearingBase pCh in partner)
                                 if (!MarkedChildBearingBases.Contains(pCh))
                                     Below(pCh, currX, currY+1, ancestorY);
                         }
@@ -67,21 +67,21 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
 
         }
 
-        private void Above(ChildBearingBase n, int x, int y)
+        private void Above(IChildBearingBase n, int x, int y)
         {
            // MarkedChildBearingBases.Add(n);
-            if (n is Parentship)
+            if (n is IParentship)
             {
-                IFamilyMember nextParent = ((Parentship)n).Partner1;
+                IFamilyMember nextParent = ((IParentship)n).Partner1;
                 //set relative position
                 nextParent.AddFact(FactType.XPosition, x);
                 nextParent.AddFact(FactType.YPosition, y);
 
                 MarkedMembers.Add(nextParent);
                 //ensure that we recurse over non-inlaw partner
-                if (n is Partnership)
+                if (n is IPartnership)
                 {
-                    var partnership = n as Partnership;
+                    var partnership = n as IPartnership;
                     var otherPartner = partnership.OtherPartner(nextParent);
                     //set relative position
                     otherPartner.AddFact(FactType.XPosition, x);
@@ -95,7 +95,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
                 }
 
                 //recurse through nextParent parentships/partnerships
-                foreach(ChildBearingBase p in nextParent)
+                foreach(IChildBearingBase p in nextParent)
                 {
                     if (!MarkedChildBearingBases.Contains(p))
                         Below(p, x, y+1, y);

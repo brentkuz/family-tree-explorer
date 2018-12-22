@@ -1,5 +1,5 @@
-﻿using FamilyTreeExplorer.Business.Objects.Interfaces;
-using FamilyTreeExplorer.Business.Objects.Relationships;
+﻿using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
+using FamilyTreeExplorer.Business.FamilyTree.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using System;
 using System.Collections;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FamilyTreeExplorer.Business.Objects
+namespace FamilyTreeExplorer.Business.FamilyTree
 {
     public class FamilyMember : TreeNode, IFamilyMember
     {
@@ -23,9 +23,9 @@ namespace FamilyTreeExplorer.Business.Objects
 
         public string Name { get; set; }
         public Gender Gender { get; set; }
-        public Parentship Parents { get; set; }
-        public List<Partnership> Partnerships { get; set; } = new List<Partnership>();
-        public Parentship NonPartnership { get; set; } = new Parentship();
+        public IParentship Parents { get; set; }
+        public List<IPartnership> Partnerships { get; set; } = new List<IPartnership>();
+        public IParentship NonPartnership { get; set; } = new Parentship();
 
         public Dictionary<FactType, Fact> Facts { get; set; } = new Dictionary<FactType, Fact>();
 

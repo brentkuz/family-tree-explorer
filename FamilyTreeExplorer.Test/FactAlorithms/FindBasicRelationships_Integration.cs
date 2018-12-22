@@ -1,7 +1,7 @@
 ﻿using FamilyTreeExplorer.Business.FactAlgorithms;
-using FamilyTreeExplorer.Business.Objects;
-using FamilyTreeExplorer.Business.Objects.Interfaces;
-using FamilyTreeExplorer.Business.Objects.Relationships;
+using FamilyTreeExplorer.Business.FamilyTree;
+using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
+using FamilyTreeExplorer.Business.FamilyTree.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using FamilyTreeExplorer.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

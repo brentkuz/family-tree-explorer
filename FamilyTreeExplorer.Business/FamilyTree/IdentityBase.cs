@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FamilyTreeExplorer.Business.Objects
+namespace FamilyTreeExplorer.Business.FamilyTree
 {
-    public abstract class IdentityBase : IEquatable<IdentityBase>
+    public abstract class IdentityBase : IEquatable<IdentityBase>, IIdentityBase
     {
         public IdentityBase()
         {

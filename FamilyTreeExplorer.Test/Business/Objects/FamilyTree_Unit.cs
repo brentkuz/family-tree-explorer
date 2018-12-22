@@ -1,10 +1,10 @@
-using FamilyTreeExplorer.Business.Objects;
-using FamilyTreeExplorer.Business.Objects.Relationships;
+using FamilyTreeExplorer.Business.FamilyTree;
+using FamilyTreeExplorer.Business.FamilyTree.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
 using FamilyTreeExplorer.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FamilyTreeExplorer.Test.Business.Objects
+namespace FamilyTreeExplorer.Test.Business.FamilyTree
 {   
     [TestClass]
     [TestCategory("FamilyTree_Unit")]

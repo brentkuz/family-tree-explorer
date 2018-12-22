@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using FamilyTreeExplorer.Business.FactAlgorithms.Interfaces;
-using FamilyTreeExplorer.Business.Objects;
-using FamilyTreeExplorer.Business.Objects.Interfaces;
+using FamilyTreeExplorer.Business.FamilyTree;
+using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
 using FamilyTreeExplorer.Crosscutting.Enums;
 
 namespace FamilyTreeExplorer.Business.FactAlgorithms
