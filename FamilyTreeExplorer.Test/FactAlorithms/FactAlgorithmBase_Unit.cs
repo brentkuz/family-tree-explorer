@@ -20,7 +20,7 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         public void Ctor_NullTree()
         {
             var membMock = new Mock<IFamilyMember>();
-            new FindBasicRelationships(null, membMock.Object);
+            new FindBasicRelationships().Execute(null, membMock.Object);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         {
             var treeMock = new Mock<IFamilyTree>();
             var membMock = new Mock<IFamilyMember>();
-            new FindBasicRelationships(treeMock.Object, membMock.Object);
+            new FindBasicRelationships().Execute(treeMock.Object, membMock.Object);
         }
 
         [TestMethod]
@@ -40,7 +40,7 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             treeMock.Setup(x => x.Root).Returns(new Partnership(new FamilyMember(), new FamilyMember()));
             treeMock.Setup(x => x.MemberExists(It.IsAny<IFamilyMember>())).Returns(false);
             var membMock = new Mock<IFamilyMember>();
-            new FindBasicRelationships(treeMock.Object, membMock.Object);
+            new FindBasicRelationships().Execute(treeMock.Object, membMock.Object);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             treeMock.Setup(x => x.MemberExists(It.IsAny<IFamilyMember>())).Returns(true);
             var membMock = new Mock<IFamilyMember>();
             membMock.Setup(x => x.HasFact(It.Is<FactType>(t => t == FactType.InLaw))).Returns(true);
-            new FindBasicRelationships(treeMock.Object, membMock.Object);
+            new FindBasicRelationships().Execute(treeMock.Object, membMock.Object);
         }
     }
 }

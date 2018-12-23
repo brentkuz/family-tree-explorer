@@ -67,20 +67,20 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
 
             //case 1 
             var source = tree.Root.Children[0];
-            var find = new FindBasicRelationships(tree, source);
-            find.Execute();
+            var find = new FindBasicRelationships();
+            find.Execute(tree, source);
             Assert.AreEqual(tree.Count, find.MarkedMembers.Count);
 
             //case 2
             source = tree.Root.Children[1].Partnerships[0].Children[0];
-            find = new FindBasicRelationships(tree, source);
-            find.Execute();
+            find = new FindBasicRelationships();
+            find.Execute(tree, source);
             Assert.AreEqual(tree.Count, find.MarkedMembers.Count);
 
             //case 3
             source = tree.Root.Partner1;
-            find = new FindBasicRelationships(tree, source);
-            find.Execute();
+            find = new FindBasicRelationships();
+            find.Execute(tree, source);
             Assert.AreEqual(tree.Count, find.MarkedMembers.Count);
         }
 
@@ -91,15 +91,15 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             var tree = TreeHelper.GetTree();
             
             var source = tree.Root.Partner2;
-            var find = new FindBasicRelationships(tree, source);
-            find.Execute();
+            var find = new FindBasicRelationships();
+            find.Execute(tree, source);
         }
 
         [TestMethod]
         public void Execute_SiblingHasCorrectRelativePosition()
         {
-            var alg = new FindBasicRelationships(tree, della);
-            alg.Execute();
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, della);
 
             Assert.AreEqual(0, roxi.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(0, roxi.GetFactValue<int>(FactType.YPosition));
@@ -108,8 +108,8 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         [TestMethod]
         public void Execute_ParentHasCorrectRelativePosition()
         {
-            var alg = new FindBasicRelationships(tree, roxi);
-            alg.Execute();
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, roxi);
 
             Assert.AreEqual(0, brent.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(-1, brent.GetFactValue<int>(FactType.YPosition));
@@ -118,8 +118,8 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         [TestMethod]
         public void Execute_AuntUncleHasCorrectRelativePosition()
         {
-            var alg = new FindBasicRelationships(tree, roxi);
-            alg.Execute();
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, roxi);
 
             Assert.AreEqual(0, jeff.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(-1, jeff.GetFactValue<int>(FactType.YPosition));
@@ -128,8 +128,8 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         [TestMethod]
         public void Execute_GrandparentHasCorrectRelativePosition()
         {
-            var alg = new FindBasicRelationships(tree, roxi);
-            alg.Execute();
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, roxi);
 
             Assert.AreEqual(0, greg.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(-2, greg.GetFactValue<int>(FactType.YPosition));
@@ -138,8 +138,8 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         [TestMethod]
         public void Execute_InLawHasSameRelativePositionAsSpouse()
         {
-            var alg = new FindBasicRelationships(tree, roxi);
-            alg.Execute();
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, roxi);
 
             Assert.AreEqual(jeff.GetFactValue<int>(FactType.XPosition), aura.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(jeff.GetFactValue<int>(FactType.YPosition), aura.GetFactValue<int>(FactType.YPosition));
@@ -148,8 +148,8 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         [TestMethod]
         public void Execute_FirstCousinHasCorrectRelativePosition()
         {
-            var alg = new FindBasicRelationships(tree, ping);
-            alg.Execute();
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, ping);
 
             Assert.AreEqual(1, roxi.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(0, roxi.GetFactValue<int>(FactType.YPosition));
@@ -158,8 +158,8 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         [TestMethod]
         public void Execute_SecondCousinHasCorrectRelativePosition()
         {
-            var alg = new FindBasicRelationships(tree, timmy);
-            alg.Execute();
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, timmy);
 
             Assert.AreEqual(2, leroy.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(0, leroy.GetFactValue<int>(FactType.YPosition));
@@ -169,8 +169,8 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         [TestMethod]
         public void Execute_FirstCousinOnceRemovedCase1HasCorrectRelativePosition()
         {
-            var alg = new FindBasicRelationships(tree, timmy);
-            alg.Execute();
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, timmy);
 
             Assert.AreEqual(1, ping.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(-1, ping.GetFactValue<int>(FactType.YPosition));
@@ -180,8 +180,8 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         [TestMethod]
         public void Execute_FirstCousinOnceRemovedCase2HasCorrectRelativePosition()
         {
-            var alg = new FindBasicRelationships(tree, ping);
-            alg.Execute();
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, ping);
 
             Assert.AreEqual(2, timmy.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(1, timmy.GetFactValue<int>(FactType.YPosition));

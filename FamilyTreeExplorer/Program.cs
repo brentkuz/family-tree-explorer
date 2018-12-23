@@ -1,4 +1,6 @@
 ﻿using FamilyTreeExplorer.Business.FactAlgorithms;
+using FamilyTreeExplorer.Business.FactAlgorithms.Interfaces;
+using FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers;
 using FamilyTreeExplorer.Business.FamilyTree;
 using FamilyTreeExplorer.Business.FamilyTree.Relationships;
 using FamilyTreeExplorer.Crosscutting.Enums;
@@ -10,6 +12,7 @@ namespace FamilyTreeExplorer.ConsoleApp
     {
         static void Main(string[] args)
         {
+            #region tree
             FamilyMember greg = new FamilyMember("Greg", Gender.Male),
                 pam = new FamilyMember("Pam", Gender.Female),
                 jeff = new FamilyMember("Jeff", Gender.Male),
@@ -50,14 +53,29 @@ namespace FamilyTreeExplorer.ConsoleApp
             var pingNancy = tree.AddPartnership(ping, nancy);
             tree.AddChild(pingNancy, leroy);
 
+            #endregion
 
             var source = timmy;
-            var alg = new FindBasicRelationships(tree, source);
-            alg.Execute();
 
+            var resolvers = new IRelationshipResolver[]
+            {
+                new DirectLineageResolver()
+            };
+
+            var algs = new IExecutableAlgorithm[]
+            {
+                new FindBasicRelationships(),
+                new ResolveRelationshipNames(resolvers)
+            };
+            var processor = new FamilyTreeProcessor(algs);
+            processor.Process(tree, source);
+
+
+            #region display
             Console.WriteLine("Source: " + source.Name);
             foreach (FamilyMember fm in tree)
                 DisplayMemberWithFacts(fm);
+            #endregion
 
             Console.ReadKey();
         }

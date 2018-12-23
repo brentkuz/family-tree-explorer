@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FamilyTreeExplorer.Business.FactAlgorithms.Interfaces
 {
-    public interface IResolveRelationshipNames : IExecutable
+    public interface IResolveRelationshipNames : IExecutableAlgorithm
     {
     }
 }

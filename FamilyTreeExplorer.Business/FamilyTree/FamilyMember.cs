@@ -13,19 +13,20 @@ namespace FamilyTreeExplorer.Business.FamilyTree
     {
         public FamilyMember()
         {
-            NonPartnership.Partner1 = this;
+            NonPartnership = FamilyTreeFactory.CreateParentship(this);
         }
         public FamilyMember(string name, Gender gender) : this()
         {                    
             this.Name = name;
             this.Gender = gender;
+            
         }
 
         public string Name { get; set; }
         public Gender Gender { get; set; }
         public IParentship Parents { get; set; }
         public List<IPartnership> Partnerships { get; set; } = new List<IPartnership>();
-        public IParentship NonPartnership { get; set; } = new Parentship();
+        public IParentship NonPartnership { get; set; } 
 
         public Dictionary<FactType, Fact> Facts { get; set; } = new Dictionary<FactType, Fact>();
 

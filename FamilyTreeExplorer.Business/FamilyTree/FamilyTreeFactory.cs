@@ -7,24 +7,24 @@ using System.Text;
 
 namespace FamilyTreeExplorer.Business.FamilyTree
 {
-    public class FamilyTreeFactory : IFamilyTreeFactory
+    public static class FamilyTreeFactory
     {
-        public IFamilyMember CreateFamilyMember(string name, Gender gender)
+        public static IFamilyMember CreateFamilyMember(string name, Gender gender)
         {
             return new FamilyMember(name, gender);
         }
 
-        public IParentship CreateParentship(IFamilyMember partner1)
+        public static IParentship CreateParentship(IFamilyMember partner1)
         {
             return new Parentship(partner1);
         }
 
-        public IParentship CreatePartnership(IFamilyMember partner1, IFamilyMember partner2, bool isDivorced = false)
+        public static IPartnership CreatePartnership(IFamilyMember partner1, IFamilyMember partner2, bool isDivorced = false)
         {
             return new Partnership(partner1, partner2, isDivorced);
         }
 
-        public IFamilyTree CreateFamilyTree()
+        public static IFamilyTree CreateFamilyTree()
         {
             return new FamilyTree();
         }

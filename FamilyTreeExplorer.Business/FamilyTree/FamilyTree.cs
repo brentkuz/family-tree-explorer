@@ -82,7 +82,7 @@ namespace FamilyTreeExplorer.Business.FamilyTree
             if (!p1Exists || !p2Exists)
                 throw new NotInFamilyTreeException(!p1Exists ? partner1 : partner2);
 
-            var partnership = new Partnership(partner1, partner2);
+            var partnership = FamilyTreeFactory.CreatePartnership(partner1, partner2);
 
             IFamilyMember blood = null,
                 inlaw = null;

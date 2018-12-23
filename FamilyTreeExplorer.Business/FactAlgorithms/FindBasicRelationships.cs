@@ -11,14 +11,14 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
 {
     public class FindBasicRelationships : FactAgorithmBase, IFindBasicRelationships
     {
-        public FindBasicRelationships(IFamilyTree tree, IFamilyMember source) : base(tree, source)
+        public FindBasicRelationships()
         {
         }
 
         public HashSet<IFamilyMember> MarkedMembers { get; set; } = new HashSet<IFamilyMember>();
         public HashSet<IChildBearingBase> MarkedChildBearingBases { get; set; } = new HashSet<IChildBearingBase>();
 
-        public override void Execute()
+        protected override void Execute()
         {            
             Below(source.Parents ?? tree.Root, 0, source.Parents == null ? 1 : 0, source.Parents == null ? 1 : 0);
             Above(source.Parents ?? tree.Root, 0, source.Parents == null ? 0 : -1);

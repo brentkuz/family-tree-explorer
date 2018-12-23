@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FamilyTreeExplorer.Business.FactAlgorithms.Interfaces
 {
-    public interface IFindBasicRelationships : IExecutable
+    public interface IFindBasicRelationships : IExecutableAlgorithm
     {
         HashSet<IFamilyMember> MarkedMembers { get; set; }
         HashSet<IChildBearingBase> MarkedChildBearingBases { get; set; }

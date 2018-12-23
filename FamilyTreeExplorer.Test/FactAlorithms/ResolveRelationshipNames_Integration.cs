@@ -64,8 +64,8 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
         [ExpectedException(typeof(NoPositionFactsException))]
         public void Execute_NoPositionFacts()
         {
-            var alg = new ResolveRelationshipNames(tree, tree.Root.Partner1);
-            alg.Execute();
+            var alg = new ResolveRelationshipNames();
+            alg.Execute(tree, tree.Root.Partner1);
         }
 
         //[TestMethod]
@@ -81,7 +81,7 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
 
         private void DoFindBasicRelationships(IFamilyMember source)
         {
-            new FindBasicRelationships(tree, source);
+            new FindBasicRelationships().Execute(tree, source);
         }
     }
 }
