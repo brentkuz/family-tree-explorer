@@ -55,17 +55,18 @@ namespace FamilyTreeExplorer.ConsoleApp
 
             #endregion
 
-            var source = timmy;
+            var source = brent;
 
             var resolvers = new IRelationshipResolver[]
             {
-                new DirectLineageResolver()
+                new DirectLineageResolver(),
+                new CousinResolver()
             };
 
             var algs = new IExecutableAlgorithm[]
             {
                 new FindBasicRelationships(),
-                new ResolveRelationshipNames(resolvers)
+               // new ResolveRelationshipNames(resolvers)
             };
             var processor = new FamilyTreeProcessor(algs);
             processor.Process(tree, source);

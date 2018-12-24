@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 using FamilyTreeExplorer.Business.FactAlgorithms.Interfaces;
-using FamilyTreeExplorer.Business.FamilyTree;
 using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
+using FamilyTreeExplorer.Crosscutting.Enums;
 
 namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
 {
-    public class DirectLineageResolver : RelationshipResolverBase, IDirectLineageResolver
+    public class CousinResolver : RelationshipResolverBase, ICousinResolver
     {
-        private const int MIN_X_POSITION = 0;
-        private const int MAX_X_POSITION = 0;
+        private const int MIN_X_POSITION = 1;
 
-        public DirectLineageResolver()
+        public CousinResolver()
         {
             MinXPosition = MIN_X_POSITION;
-            MaxXPosition = MAX_X_POSITION;
         }
-
         public override string Execute(IFamilyMember source, IFamilyMember target)
         {
-            return "Direct Lineage";
+            return RelationshipType.Cousin.ToString();
         }
     }
 }

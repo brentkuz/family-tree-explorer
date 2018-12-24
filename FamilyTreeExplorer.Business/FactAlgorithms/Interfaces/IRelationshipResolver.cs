@@ -1,8 +1,9 @@
 ﻿using FamilyTreeExplorer.Business.FamilyTree.Interfaces;
+using System;
 
 namespace FamilyTreeExplorer.Business.FactAlgorithms.Interfaces
 {
-    public interface IRelationshipResolver
+    public interface IRelationshipResolver : IEquatable<IRelationshipResolver>
     {
         int? MaxXPosition { get; }
         int? MaxYPosition { get; }

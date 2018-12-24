@@ -24,18 +24,26 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
         {
             foreach(IFamilyMember memb in tree)
             {
-                if (!memb.HasFact(FactType.XPosition) || !memb.HasFact(FactType.YPosition))
-                    throw new NoPositionFactsException(memb);
+                if (!memb.HasFact(FactType.Relationship))
+                {
+                    if(memb == source)
+                    {
+                        memb.AddFact(FactType.Relationship, RelationshipType.Self);
+                        continue;
+                    }
+                    if (!memb.HasFact(FactType.XPosition) || !memb.HasFact(FactType.YPosition))
+                        throw new NoPositionFactsException(memb);
 
-                int xPosition = memb.GetFactValue<int>(FactType.XPosition),
-                    yPosition = memb.GetFactValue<int>(FactType.YPosition);
+                    int xPosition = memb.GetFactValue<int>(FactType.XPosition),
+                        yPosition = memb.GetFactValue<int>(FactType.YPosition);
+                   
+                    var resolver = resolvers.Where(x => x.InPositionRange(xPosition, yPosition)).FirstOrDefault();
 
-                var resolver = resolvers.Where(x => x.InPositionRange(xPosition, yPosition)).SingleOrDefault();
-
-                if(resolver == null)
-                    throw new NoRelationshipResolverFoundException(memb);
-
-                memb.AddFact(FactType.Relationship, resolver.Execute(source, memb));
+                    if (resolver == null)
+                        throw new NoRelationshipResolverFoundException(memb);
+                  
+                    memb.AddFact(FactType.Relationship, resolver.Execute(source, memb));               
+                }
             }
         }
 

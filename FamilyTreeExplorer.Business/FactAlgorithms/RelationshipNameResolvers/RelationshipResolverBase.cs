@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
 {
-    public abstract class RelationshipResolverBase : IRelationshipResolver, IEquatable<IRelationshipResolver>
+    public abstract class RelationshipResolverBase : IRelationshipResolver
     {
         public int? MinXPosition { get; protected set; }
         public int? MaxXPosition { get; protected set; }
@@ -35,5 +35,6 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
                 );
         
         }
+        
     }
 }

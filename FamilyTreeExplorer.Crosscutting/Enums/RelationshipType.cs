@@ -6,6 +6,7 @@ namespace FamilyTreeExplorer.Crosscutting.Enums
 {
     public enum RelationshipType
     {
+        Self,
         Parent,
         Sibling,
         Aunt,
