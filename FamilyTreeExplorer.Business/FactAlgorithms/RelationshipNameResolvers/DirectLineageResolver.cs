@@ -16,6 +16,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
 
         private const int AUNT_UNCLE_GREAT_START_Y_POSITION = -1;
         private const int GRANDPARENT_GREAT_START_Y_POSITION = -2;
+        private const int GRANDCHILD_GREAT_START_Y_POSITION = 2;
 
         public DirectLineageResolver()
         {
@@ -95,6 +96,9 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
                     break;
                 case RelationshipType.Grandparent:
                     greatness = GetGreatCount(yPosition - GRANDPARENT_GREAT_START_Y_POSITION);
+                    break;
+                case RelationshipType.Grandchild:
+                    greatness = GetGreatCount(yPosition - GRANDCHILD_GREAT_START_Y_POSITION);
                     break;
             }
 

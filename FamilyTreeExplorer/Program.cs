@@ -56,7 +56,7 @@ namespace FamilyTreeExplorer.ConsoleApp
             tree.AddNonPartnershipChild(leroy, new FamilyMember("Davis", Gender.Male));
             #endregion
 
-            var source = timmy;
+            var source = greg;
 
             var resolvers = new IRelationshipResolver[]
             {
