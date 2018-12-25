@@ -67,7 +67,7 @@ namespace FamilyTreeExplorer.ConsoleApp
             var algs = new IExecutableAlgorithm[]
             {
                 new FindBasicRelationships(),
-               // new ResolveRelationshipNames(resolvers)
+                new ResolveRelationshipNames(resolvers)
             };
             var processor = new FamilyTreeProcessor(algs);
             processor.Process(tree, source);

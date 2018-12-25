@@ -78,6 +78,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
                 //set relative position
                 nextParent.AddFact(FactType.XPosition, x);
                 nextParent.AddFact(FactType.YPosition, y);
+                nextParent.AddFact(FactType.Ancestor, true);
 
                 MarkedMembers.Add(nextParent);
                 //ensure that we recurse over non-inlaw partner
@@ -88,6 +89,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
                     //set relative position
                     otherPartner.AddFact(FactType.XPosition, x);
                     otherPartner.AddFact(FactType.YPosition, y);
+                    otherPartner.AddFact(FactType.Ancestor, true);
 
                     MarkedMembers.Add(otherPartner);
                     if (nextParent.HasFact(FactType.InLaw))

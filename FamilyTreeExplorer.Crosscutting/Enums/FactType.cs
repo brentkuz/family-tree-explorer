@@ -13,6 +13,7 @@ namespace FamilyTreeExplorer.Crosscutting.Enums
         InLaw,
         Target,
         HasSingleParent,
-        Step
+        Step,
+        Ancestor
     }
 }

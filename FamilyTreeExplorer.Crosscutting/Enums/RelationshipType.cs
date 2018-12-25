@@ -19,4 +19,9 @@ namespace FamilyTreeExplorer.Crosscutting.Enums
         Cousin,
         Spouse
     }
+
+    public enum RelationshipModifier
+    {
+        Great
+    }
 }
