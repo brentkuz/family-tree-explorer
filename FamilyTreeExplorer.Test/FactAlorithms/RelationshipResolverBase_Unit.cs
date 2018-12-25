@@ -48,14 +48,5 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
 
             Assert.IsFalse(r.InPositionRange(x, y));
         }
-        [TestMethod]
-        public void InPositionRange_InvalidPositionY()
-        {
-            var r = new DirectLineageResolver();
-            int x = 0,
-                y = -1;
-
-            Assert.IsFalse(r.InPositionRange(x, y));
-        }
     }
 }

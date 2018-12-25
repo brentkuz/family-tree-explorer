@@ -29,8 +29,10 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
             if (n == null || !n.HasChildren())
                 return;
 
-            int currX = Math.Abs(ancestorY) - Math.Abs(y), 
-                currY = y;
+            //nextX is calculated if current member is higher in tree, otherwise we 
+            //use the parents x value.
+            int nextX = y < 0 ? Math.Abs(ancestorY) - Math.Abs(y) : x, 
+                nextY = y + 1;
 
             MarkedChildBearingBases.Add(n);
 
@@ -45,7 +47,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
                     MarkedMembers.Add(ch);
                     //children
                     foreach (IChildBearingBase p in ch)
-                        Below(p, currX, currY+1, ancestorY);
+                        Below(p, nextX, nextY, ancestorY);
                     //partners and there children
                     foreach(var p in ch.Partnerships)
                     {
@@ -59,7 +61,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
                             MarkedMembers.Add(partner);
                             foreach (IChildBearingBase pCh in partner)
                                 if (!MarkedChildBearingBases.Contains(pCh))
-                                    Below(pCh, currX, currY+1, ancestorY);
+                                    Below(pCh, nextX, nextY, ancestorY);
                         }
                     }
                 }

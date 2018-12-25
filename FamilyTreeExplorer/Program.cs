@@ -53,9 +53,10 @@ namespace FamilyTreeExplorer.ConsoleApp
             var pingNancy = tree.AddPartnership(ping, nancy);
             tree.AddChild(pingNancy, leroy);
 
+            tree.AddNonPartnershipChild(leroy, new FamilyMember("Davis", Gender.Male));
             #endregion
 
-            var source = brent;
+            var source = timmy;
 
             var resolvers = new IRelationshipResolver[]
             {

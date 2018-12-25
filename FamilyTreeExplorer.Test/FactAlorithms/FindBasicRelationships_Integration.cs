@@ -76,7 +76,7 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             find = new FindBasicRelationships();
             find.Execute(tree, source);
             Assert.AreEqual(tree.Count, find.MarkedMembers.Count);
-
+            
             //case 3
             source = tree.Root.Partner1;
             find = new FindBasicRelationships();
@@ -183,7 +183,7 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             var alg = new FindBasicRelationships();
             alg.Execute(tree, ping);
 
-            Assert.AreEqual(2, timmy.GetFactValue<int>(FactType.XPosition));
+            Assert.AreEqual(1, timmy.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(1, timmy.GetFactValue<int>(FactType.YPosition));
         }
     }
