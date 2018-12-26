@@ -26,7 +26,8 @@ namespace FamilyTreeExplorer.ConsoleApp
                 guy = new FamilyMember("Guy", Gender.Male),
                 nancy = new FamilyMember("Nancy", Gender.Female),
                 timmy = new FamilyMember("Timmy", Gender.Male),
-                leroy = new FamilyMember("Leroy", Gender.Male);
+                leroy = new FamilyMember("Leroy", Gender.Male),
+                martha = new FamilyMember("Martha", Gender.Female);
 
             var tree = new FamilyTree();
             tree.SetRoot(new Partnership(greg, pam), pam);
@@ -38,12 +39,15 @@ namespace FamilyTreeExplorer.ConsoleApp
             tree.AddInLaw(aura);
             tree.AddInLaw(guy);
             tree.AddInLaw(nancy);
+            tree.AddInLaw(martha);
 
             var brentJaclyn = tree.AddPartnership(brent, jaclyn);
             tree.AddChild(brentJaclyn, roxi);
             tree.AddChild(brentJaclyn, della);
 
             var jeffAura = tree.AddPartnership(jeff, aura);
+
+            tree.AddPartnership(kyle, martha, true);
 
             tree.AddNonPartnershipChild(kyle, ping);
 
@@ -56,7 +60,7 @@ namespace FamilyTreeExplorer.ConsoleApp
             tree.AddNonPartnershipChild(leroy, new FamilyMember("Davis", Gender.Male));
             #endregion
 
-            var source = greg;
+            var source = brent;
 
             var resolvers = new IRelationshipResolver[]
             {

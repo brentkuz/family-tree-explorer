@@ -27,14 +27,16 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
         public override string Execute(IFamilyMember source, IFamilyMember target)
         {
             var relationshipType = GetRelationshipTypeName(source, target);
-            var greatnessPart = GetGreatness(target.GetFactValue<int>(FactType.YPosition), relationshipType);
+            var greatnessPart = GetGreatness(target.GetFactValue<int>(FactType.YPosition), relationshipType.Item1);
 
-            return string.Format("{0}{1}", greatnessPart, relationshipType.ToString());
+            return string.Format("{0}{1}", greatnessPart, relationshipType.Item2);
         }
 
-        protected virtual RelationshipType GetRelationshipTypeName(IFamilyMember source, IFamilyMember target)
+        protected virtual Tuple<RelationshipType, string> GetRelationshipTypeName(IFamilyMember source, IFamilyMember target)
         {
             RelationshipType type = default(RelationshipType);
+            string typeDisplay = null;
+
             int sourceX = source.GetFactValue<int>(FactType.XPosition),
                 sourceY = source.GetFactValue<int>(FactType.YPosition),
                 targetX = target.GetFactValue<int>(FactType.XPosition),
@@ -54,8 +56,8 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
                 }
             }
             else if (targetY == -1)
-            {                
-                if(target.HasFact(FactType.Ancestor))
+            {
+                if (target.HasFact(FactType.Ancestor))
                 {
                     //Parent
                     type = RelationshipType.Parent;
@@ -65,13 +67,24 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
                     //Aunt/Uncle
                     type = target.Gender == Gender.Female ? RelationshipType.Aunt : RelationshipType.Uncle;
                 }
-            }            
+            }
             else if (targetY == 0)
             {
-                //Sibling
-                type = RelationshipType.Sibling;
+                //Wife/Wives
+                var isEx = source.IsDivorcedFrom(target);
+                if (source.IsMarriedTo(target) || isEx)
+                {
+                    type = RelationshipType.Spouse;
+                    if (isEx)
+                        typeDisplay = "Ex-" + RelationshipType.Spouse.ToString();
+                }
+                else
+                {
+                    //Sibling
+                    type = RelationshipType.Sibling;
+                }
             }
-            else if(targetY == 1)
+            else if (targetY == 1)
             {
                 //Child
                 type = RelationshipType.Child;
@@ -82,7 +95,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
                 type = RelationshipType.Grandchild;
             }
 
-            return type;
+            return new Tuple<RelationshipType, string>(type, typeDisplay ?? type.ToString());
         }
 
         protected virtual string GetGreatness(int yPosition, RelationshipType type)
@@ -109,5 +122,8 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
         {
             return string.Concat(Enumerable.Repeat(RelationshipModifier.Great.ToString() + " ", Math.Abs(count)));
         }
+
+
+        
     }
 }

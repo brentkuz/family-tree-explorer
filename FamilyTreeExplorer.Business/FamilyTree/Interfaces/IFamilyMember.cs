@@ -19,5 +19,7 @@ namespace FamilyTreeExplorer.Business.FamilyTree.Interfaces
         
         bool HasChildren();
         bool HasPartnerships();
+        bool IsMarriedTo(IFamilyMember member);
+        bool IsDivorcedFrom(IFamilyMember member);
     }
 }

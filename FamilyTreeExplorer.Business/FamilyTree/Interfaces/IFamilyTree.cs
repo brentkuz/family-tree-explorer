@@ -13,7 +13,7 @@ namespace FamilyTreeExplorer.Business.FamilyTree.Interfaces
         void AddChild(IPartnership partnership, IFamilyMember child);
         void AddInLaw(IFamilyMember inlaw);
         void AddNonPartnershipChild(IFamilyMember parent, IFamilyMember child);
-        IPartnership AddPartnership(IFamilyMember partner1, IFamilyMember partner2);
+        IPartnership AddPartnership(IFamilyMember partner1, IFamilyMember partner2, bool isDivorced = false);
         void ClearMemberFacts();
         IFamilyMember GetMemberById(Guid id);
         IPartnership GetPartnershipById(Guid id);

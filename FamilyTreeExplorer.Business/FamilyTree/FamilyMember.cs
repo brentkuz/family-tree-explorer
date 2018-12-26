@@ -64,6 +64,16 @@ namespace FamilyTreeExplorer.Business.FamilyTree
                 Facts[type] = fact;
         }
 
+        public bool IsMarriedTo(IFamilyMember member)
+        {
+            return Partnerships.Exists(x => x.OtherPartner(this) == member && x.IsDivorced == false);
+        }
+
+        public bool IsDivorcedFrom(IFamilyMember member)
+        {
+            return Partnerships.Exists(x => x.OtherPartner(this) == member && x.IsDivorced == true);
+        }
+
         public void ClearAllFacts()
         {
             Facts = new Dictionary<FactType, Fact>();

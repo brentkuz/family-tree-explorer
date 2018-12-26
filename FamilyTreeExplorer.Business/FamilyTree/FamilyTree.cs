@@ -74,7 +74,7 @@ namespace FamilyTreeExplorer.Business.FamilyTree
             parent.NonPartnership.Children.Add(child);
             child.Parents = parent.NonPartnership;
         }
-        public IPartnership AddPartnership(IFamilyMember partner1, IFamilyMember partner2)
+        public IPartnership AddPartnership(IFamilyMember partner1, IFamilyMember partner2, bool isDivorced = false)
         {
             var p1Exists = MemberExists(partner1);
             var p2Exists = MemberExists(partner2);
@@ -82,7 +82,7 @@ namespace FamilyTreeExplorer.Business.FamilyTree
             if (!p1Exists || !p2Exists)
                 throw new NotInFamilyTreeException(!p1Exists ? partner1 : partner2);
 
-            var partnership = FamilyTreeFactory.CreatePartnership(partner1, partner2);
+            var partnership = FamilyTreeFactory.CreatePartnership(partner1, partner2, isDivorced);
 
             IFamilyMember blood = null,
                 inlaw = null;

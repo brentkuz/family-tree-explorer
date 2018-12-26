@@ -20,7 +20,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
 
         protected override void Execute()
         {            
-            Below(source.Parents ?? tree.Root, 0, source.Parents == null ? 1 : 0, source.Parents == null ? 1 : 0);
+            Below(source.Parents ?? tree.Root, 0, source.Parents == null ? 1 : 0, 0);
             Above(source.Parents ?? tree.Root, 0, source.Parents == null ? 0 : -1);
         }
 

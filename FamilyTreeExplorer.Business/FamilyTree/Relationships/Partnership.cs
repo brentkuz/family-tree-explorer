@@ -17,7 +17,7 @@ namespace FamilyTreeExplorer.Business.FamilyTree.Relationships
             Partner2 = partner2;
             partner1.Partnerships.Add(this);
             partner2.Partnerships.Add(this);
-            IsDivorced = IsDivorced;
+            IsDivorced = isDivorced;
         }
 
         public bool IsDivorced { get; set; }
