@@ -17,6 +17,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
         private const int AUNT_UNCLE_GREAT_START_Y_POSITION = -1;
         private const int GRANDPARENT_GREAT_START_Y_POSITION = -2;
         private const int GRANDCHILD_GREAT_START_Y_POSITION = 2;
+        private const int GRAND_NIECE_NEPHEW_GREAT_START_Y_POSITION = 2;
 
         public DirectLineageResolver()
         {
@@ -32,6 +33,8 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
             return string.Format("{0}{1}", greatnessPart, relationshipType.Item2);
         }
 
+
+        //TODO: Needs refactoring into sub resolvers.
         protected virtual Tuple<RelationshipType, string> GetRelationshipTypeName(IFamilyMember source, IFamilyMember target)
         {
             RelationshipType type = default(RelationshipType);
@@ -69,11 +72,11 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
                 }
             }
             else if (targetY == 0)
-            {
-                //Wife/Wives
+            {                
                 var isEx = source.IsDivorcedFrom(target);
                 if (source.IsMarriedTo(target) || isEx)
                 {
+                    //Spouse/Ex-Spouse
                     type = RelationshipType.Spouse;
                     if (isEx)
                         typeDisplay = "Ex-" + RelationshipType.Spouse.ToString();
@@ -85,14 +88,29 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
                 }
             }
             else if (targetY == 1)
-            {
-                //Child
-                type = RelationshipType.Child;
+            {                
+                if (target.HasFact(FactType.Ancestor))
+                {
+                    //Child
+                    type = RelationshipType.Child;
+                }
+                else
+                {
+                    //Niece/Nephew
+                    type = target.Gender == Gender.Female ? RelationshipType.Niece : RelationshipType.Nephew;
+                }
             }
             else
             {
-                //Grandchild
-                type = RelationshipType.Grandchild;
+                if (target.HasFact(FactType.Ancestor))
+                {
+                    //Grandchild
+                    type = RelationshipType.Grandchild;
+                }
+                else
+                {
+                    type = target.Gender == Gender.Female ? RelationshipType.Grandniece : RelationshipType.Grandnephew;
+                }
             }
 
             return new Tuple<RelationshipType, string>(type, typeDisplay ?? type.ToString());
@@ -112,6 +130,10 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
                     break;
                 case RelationshipType.Grandchild:
                     greatness = GetGreatCount(yPosition - GRANDCHILD_GREAT_START_Y_POSITION);
+                    break;
+                case RelationshipType.Grandniece:
+                case RelationshipType.Grandnephew:
+                    greatness = GetGreatCount(yPosition - GRAND_NIECE_NEPHEW_GREAT_START_Y_POSITION);
                     break;
             }
 

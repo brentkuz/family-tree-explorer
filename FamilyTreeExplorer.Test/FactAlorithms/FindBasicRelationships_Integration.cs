@@ -186,6 +186,28 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             Assert.AreEqual(1, timmy.GetFactValue<int>(FactType.XPosition));
             Assert.AreEqual(1, timmy.GetFactValue<int>(FactType.YPosition));
         }
+
+        [TestMethod]
+        public void Execute_AncestorsAboveSourceAreMarked()
+        {
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, roxi);
+
+            Assert.IsTrue(brent.HasFact(FactType.Ancestor));
+            Assert.IsTrue(greg.HasFact(FactType.Ancestor));
+            Assert.IsTrue(pam.HasFact(FactType.Ancestor));
+        }
+
+        [TestMethod]
+        public void Execute_AncestorsBelowSourceAreMarked()
+        {
+            var alg = new FindBasicRelationships();
+            alg.Execute(tree, greg);
+
+            Assert.IsTrue(brent.HasFact(FactType.Ancestor));
+            Assert.IsTrue(roxi.HasFact(FactType.Ancestor));
+            Assert.IsTrue(timmy.HasFact(FactType.Ancestor));
+        }
     }
 }
 

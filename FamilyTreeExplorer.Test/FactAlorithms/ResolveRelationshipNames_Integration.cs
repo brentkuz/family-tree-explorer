@@ -67,17 +67,18 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             var alg = new ResolveRelationshipNames();
             alg.Execute(tree, tree.Root.Partner1);
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(NoRelationshipResolverFoundException))]
+        public void Execute_NoRelationshipResolverFound()
+        {
+            DoFindBasicRelationships(greg);
 
-        //[TestMethod]
-        //public void Execute_ForParents()
-        //{
-        //    DoFindBasicRelationships(roxi);
-        //    var alg = new ResolveRelationshipNames(tree, tree.Root.Partner1);
-        //    alg.Execute();
+            var alg = new ResolveRelationshipNames();
+            alg.Execute(tree, tree.Root.Partner1);
+        }
 
-        //    Assert.AreEqual(RelationshipType.Parent, brent.GetFactValue<RelationshipType>(FactType.Relationship));
 
-        //}
 
         private void DoFindBasicRelationships(IFamilyMember source)
         {

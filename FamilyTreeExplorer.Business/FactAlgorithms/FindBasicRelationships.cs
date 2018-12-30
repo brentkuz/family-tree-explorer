@@ -20,11 +20,11 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
 
         protected override void Execute()
         {            
-            Below(source.Parents ?? tree.Root, 0, source.Parents == null ? 1 : 0, 0);
+            Below(source.Parents ?? tree.Root, 0, source.Parents == null ? 1 : 0, 0, source.Parents == null);
             Above(source.Parents ?? tree.Root, 0, source.Parents == null ? 0 : -1);
         }
 
-        private void Below(IChildBearingBase n, int x, int y, int ancestorY)
+        private void Below(IChildBearingBase n, int x, int y, int ancestorY, bool directDescendant = false)
         {
             if (n == null || !n.HasChildren())
                 return;
@@ -44,10 +44,19 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms
                     ch.AddFact(FactType.XPosition, x);
                     ch.AddFact(FactType.YPosition, y);
 
+                    if(directDescendant)
+                    {
+                        ch.AddFact(FactType.Ancestor, true);
+                    }
+
+
                     MarkedMembers.Add(ch);
                     //children
                     foreach (IChildBearingBase p in ch)
-                        Below(p, nextX, nextY, ancestorY);
+                    {
+                        var areDirectDescendants = directDescendant ? true : source.Equals(ch);
+                        Below(p, nextX, nextY, ancestorY, areDirectDescendants);
+                    }
                     //partners and there children
                     foreach(var p in ch.Partnerships)
                     {

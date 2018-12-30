@@ -14,6 +14,8 @@ namespace FamilyTreeExplorer.Crosscutting.Enums
         Grandparent,
         Niece,
         Nephew,
+        Grandniece,
+        Grandnephew,
         Child,
         Grandchild,
         Cousin,

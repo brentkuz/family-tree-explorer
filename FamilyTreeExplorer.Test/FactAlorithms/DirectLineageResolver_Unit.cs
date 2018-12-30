@@ -7,23 +7,6 @@ using System.Text;
 namespace FamilyTreeExplorer.Test.FactAlorithms
 {
     [TestClass]
-    [TestCategory("SelfResolver_Unit")]
-    public class SelfResolver_Unit
-    {
-        [TestMethod]
-        public void InPositionRange_InRange()
-        {
-            int x = 0,
-                y = 0;
-
-            var resolver = new SelfResolver();
-            Assert.IsTrue(resolver.InPositionRange(x, y));
-
-        }
-
-        
-    }
-    [TestClass]
     [TestCategory("DirectLineageResolver_Unit")]
     public class DirectLineageResolver_Unit
     {
@@ -45,6 +28,16 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
 
             var resolver = new DirectLineageResolver();
             Assert.IsTrue(resolver.InPositionRange(x, y));
+        }
+
+        [TestMethod]
+        public void InPositionRange_OutOfRange()
+        {
+            int x = 1,
+                y = -1;
+
+            var resolver = new DirectLineageResolver();
+            Assert.IsFalse(resolver.InPositionRange(x, y));
         }
     }
 }
