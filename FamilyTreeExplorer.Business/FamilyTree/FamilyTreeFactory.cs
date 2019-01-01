@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FamilyTreeExplorer.Business.FamilyTree
 {
-    public static class FamilyTreeFactory
+    public class FamilyTreeFactory
     {
         public static IFamilyMember CreateFamilyMember(string name, Gender gender)
         {

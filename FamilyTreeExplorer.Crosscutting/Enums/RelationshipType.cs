@@ -24,6 +24,7 @@ namespace FamilyTreeExplorer.Crosscutting.Enums
 
     public enum RelationshipModifier
     {
-        Great
+        Great,
+        Ex
     }
 }

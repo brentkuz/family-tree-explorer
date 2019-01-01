@@ -79,7 +79,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers
                     //Spouse/Ex-Spouse
                     type = RelationshipType.Spouse;
                     if (isEx)
-                        typeDisplay = "Ex-" + RelationshipType.Spouse.ToString();
+                        typeDisplay = RelationshipModifier.Ex.ToString() + "-" + RelationshipType.Spouse.ToString();
                 }
                 else
                 {
