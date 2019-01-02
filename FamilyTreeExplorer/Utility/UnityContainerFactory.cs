@@ -17,12 +17,13 @@ namespace FamilyTreeExplorer.Crosscutting.ConsoleApp.Utility
     {
         protected override void Register(IUnityContainer container)
         {
-
+            #region Fact Algorithms
             container.RegisterType<IFindBasicRelationships, FindBasicRelationships>();
 
+            #region Relationship Name Resolvers
             container.RegisterType<ICousinResolver, CousinResolver>();
 
-            //relationship sub-resolvers
+            //Relationship sub-resolvers
             container.RegisterType<IChainedSubResolver, ChainedSubResolver>();
             container.RegisterType<IGrandparentSubResolver, GrandparentSubResolver>();
             container.RegisterType<IGreatAuntUncleSubResolver, GreatAuntUncleSubResolver>();
@@ -34,13 +35,18 @@ namespace FamilyTreeExplorer.Crosscutting.ConsoleApp.Utility
             container.RegisterType<INieceNephewSubResolver, NieceNephewSubResolver>();
             container.RegisterType<IGrandchildSubResolver, GrandchildSubResolver>();
             container.RegisterType<IGrandNieceNephewSubResolver, GrandNieceNephewSubResolver>();
+            container.RegisterType<ITerminalSubResolver, TerminalSubResolver>();
 
+            
             container.RegisterType<IDirectLineageResolver, DirectLineageResolver>();
             container.RegisterType<IResolveRelationshipNames, ResolveRelationshipNames>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(new ResolvedArrayParameter<IRelationshipResolver>(
                     new ResolvedParameter<ICousinResolver>(),
                     new ResolvedParameter<IDirectLineageResolver>()
                     )));
+            #endregion
+
+            #endregion
 
             container.RegisterType<IFamilyTreeProcessor, FamilyTreeProcessor>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(new ResolvedArrayParameter<IExecutableAlgorithm>(

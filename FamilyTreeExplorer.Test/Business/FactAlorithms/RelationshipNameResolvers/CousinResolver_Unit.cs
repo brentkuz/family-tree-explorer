@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FamilyTreeExplorer.Test.FactAlorithms
+namespace FamilyTreeExplorer.Test.FactAlorithms.RelationshipNameResolvers
 {
     [TestClass]
     [TestCategory("CousinResolver_Unit")]

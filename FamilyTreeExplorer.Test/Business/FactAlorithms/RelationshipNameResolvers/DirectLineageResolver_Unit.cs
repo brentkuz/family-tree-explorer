@@ -1,10 +1,12 @@
-﻿using FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers;
+﻿using FamilyTreeExplorer.Business.FactAlgorithms.Interfaces;
+using FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FamilyTreeExplorer.Test.FactAlorithms
+namespace FamilyTreeExplorer.Test.FactAlorithms.RelationshipNameResolvers
 {
     [TestClass]
     [TestCategory("DirectLineageResolver_Unit")]
@@ -16,7 +18,9 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             int x = 0,
                 y = 0;
 
-            var resolver = new DirectLineageResolver();
+            var headMock = new Mock<IGrandparentSubResolver>();
+
+            var resolver = new DirectLineageResolver(headMock.Object);
             Assert.IsTrue(resolver.InPositionRange(x, y));
         }
 
@@ -26,7 +30,9 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             int x = 0,
                 y = -1;
 
-            var resolver = new DirectLineageResolver();
+            var headMock = new Mock<IGrandparentSubResolver>();
+
+            var resolver = new DirectLineageResolver(headMock.Object);
             Assert.IsTrue(resolver.InPositionRange(x, y));
         }
 
@@ -36,7 +42,9 @@ namespace FamilyTreeExplorer.Test.FactAlorithms
             int x = 1,
                 y = -1;
 
-            var resolver = new DirectLineageResolver();
+            var headMock = new Mock<IGrandparentSubResolver>();
+
+            var resolver = new DirectLineageResolver(headMock.Object);
             Assert.IsFalse(resolver.InPositionRange(x, y));
         }
     }

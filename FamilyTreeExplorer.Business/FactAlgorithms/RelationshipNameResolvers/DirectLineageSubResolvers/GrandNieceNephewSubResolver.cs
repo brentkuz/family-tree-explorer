@@ -9,7 +9,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers.D
 {
     public class GrandNieceNephewSubResolver : ChainedSubResolver, IGrandNieceNephewSubResolver
     {
-        public GrandNieceNephewSubResolver() : base(null, 2)
+        public GrandNieceNephewSubResolver(ITerminalSubResolver successor) : base(successor, 2)
         {
         }
 
@@ -23,7 +23,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers.D
             }
             else
             {
-                throw new NoRelationshipResolverFoundException(target);
+                return successor.Handle(source, target);
             }
         }
     }

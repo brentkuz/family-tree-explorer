@@ -15,10 +15,11 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers.D
 
         public override string Handle(IFamilyMember source, IFamilyMember target)
         {
-            if (target.GetFactValue<int>(FactType.YPosition) == 0 && source.IsMarriedTo(target))
+            var isEx = source.IsDivorcedFrom(target);
+            if (target.GetFactValue<int>(FactType.YPosition) == 0 && (source.IsMarriedTo(target) || isEx))
             {
                 return string.Format("{0}{1}",
-                    source.IsDivorcedFrom(target) ? (RelationshipModifier.Ex.ToString() + "-") : string.Empty, 
+                    isEx ? (RelationshipModifier.Ex.ToString() + "-") : string.Empty, 
                     RelationshipType.Spouse.ToString());                
             }
             else
