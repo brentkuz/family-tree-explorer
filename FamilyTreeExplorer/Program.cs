@@ -36,7 +36,9 @@ namespace FamilyTreeExplorer.ConsoleApp
                 leroy = FamilyTreeFactory.CreateFamilyMember("Leroy", Gender.Male),
                 martha = FamilyTreeFactory.CreateFamilyMember("Martha", Gender.Female),
                 davis = FamilyTreeFactory.CreateFamilyMember("Davis", Gender.Male),
-                gary = FamilyTreeFactory.CreateFamilyMember("Gary", Gender.Male);
+                gary = FamilyTreeFactory.CreateFamilyMember("Gary", Gender.Male),
+                patty = FamilyTreeFactory.CreateFamilyMember("Patty", Gender.Female),
+                randy = FamilyTreeFactory.CreateFamilyMember("Randy", Gender.Male);
 
             var tree = FamilyTreeFactory.CreateFamilyTree();
             tree.SetRoot(FamilyTreeFactory.CreatePartnership(greg, pam), pam);
@@ -49,6 +51,7 @@ namespace FamilyTreeExplorer.ConsoleApp
             tree.AddInLaw(guy);
             tree.AddInLaw(nancy);
             tree.AddInLaw(martha);
+            tree.AddInLaw(patty);
 
             var brentJaclyn = tree.AddPartnership(brent, jaclyn);
             tree.AddChild(brentJaclyn, roxi);
@@ -56,10 +59,11 @@ namespace FamilyTreeExplorer.ConsoleApp
 
             var jeffAura = tree.AddPartnership(jeff, aura);
 
-            var kyleMartha = tree.AddPartnership(kyle, martha, true);
-
-            //tree.AddNonPartnershipChild(kyle, ping);
+            var kyleMartha = tree.AddPartnership(kyle, martha, false);
             tree.AddChild(kyleMartha, ping);
+
+            var kylePatty = tree.AddPartnership(kyle, patty, true);
+            tree.AddChild(kylePatty, randy);
 
             var roxiGuy = tree.AddPartnership(roxi, guy);
             tree.AddChild(roxiGuy, timmy);
@@ -74,7 +78,7 @@ namespace FamilyTreeExplorer.ConsoleApp
 
 
             //Process
-            var source = ping;
+            var source = roxi;
             processor.Process(tree, source);
 
 
