@@ -15,7 +15,8 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers.D
 
         public override string Handle(IFamilyMember source, IFamilyMember target)
         {
-            if (target.GetFactValue<int>(FactType.YPosition) == 0)
+            var isEx = source.IsDivorcedFrom(target);
+            if (target.GetFactValue<int>(FactType.YPosition) == 0 && !source.IsMarriedTo(target) && !isEx)
             {
                 return RelationshipType.Sibling.ToString();
             }

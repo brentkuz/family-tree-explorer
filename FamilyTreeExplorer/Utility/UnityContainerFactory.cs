@@ -23,8 +23,7 @@ namespace FamilyTreeExplorer.Crosscutting.ConsoleApp.Utility
             #region Relationship Name Resolvers
             container.RegisterType<ICousinResolver, CousinResolver>();
 
-            //Relationship sub-resolvers
-            container.RegisterType<IChainedSubResolver, ChainedSubResolver>();
+            //Direct Lineage sub-resolvers
             container.RegisterType<IGrandparentSubResolver, GrandparentSubResolver>();
             container.RegisterType<IGreatAuntUncleSubResolver, GreatAuntUncleSubResolver>();
             container.RegisterType<IParentSubResolver, ParentSubResolver>();

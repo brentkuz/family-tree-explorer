@@ -15,7 +15,7 @@ namespace FamilyTreeExplorer.Business.FactAlgorithms.RelationshipNameResolvers.D
 
         public override string Handle(IFamilyMember source, IFamilyMember target)
         {
-            if (target.GetFactValue<int>(FactType.YPosition) == 1)
+            if (target.GetFactValue<int>(FactType.YPosition) == 1 && !target.HasFact(FactType.Ancestor))
             {
                 return target.Gender == Gender.Female ? RelationshipType.Niece.ToString() : RelationshipType.Nephew.ToString();
             }
